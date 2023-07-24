@@ -51,6 +51,7 @@
     </dependencies>
 
     <build>
+        <finalName>budgetaryControl</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
