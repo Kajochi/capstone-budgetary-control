@@ -1,8 +1,8 @@
-import {Entry} from "./model/entry.ts";
+import {Entry} from "./model/Entry.ts";
 import {useEffect, useState} from "react";
 import axios from "axios";
 import EntriesList from "./entriesList/EntriesList.tsx";
-
+import './App.css';
 
 
 
@@ -23,7 +23,7 @@ export default function App() {
   return (
     <>
       <header>
-        <h1>Budgetary Control</h1>
+        <h1 id={"mainTitle"}>Budgetary Control</h1>
       </header>
         <main>
           <EntriesList entries={entries} />

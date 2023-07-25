@@ -1,4 +1,4 @@
-import {Entry} from "../model/entry.ts";
+import {Entry} from "../model/Entry.ts";
 import EntryCard from "../entryCard/EntryCard.tsx";
 
 type Props = {
