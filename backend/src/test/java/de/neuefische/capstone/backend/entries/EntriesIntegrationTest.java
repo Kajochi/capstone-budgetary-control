@@ -9,8 +9,7 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -22,16 +21,17 @@ class EntriesIntegrationTest {
 
     @DirtiesContext
     @Test
-    void WhenListIsEmptyReturnEmptyList() throws Exception{
+    void WhenListIsEmptyReturnEmptyList() throws Exception {
         //When
         mockMvc.perform(
-                MockMvcRequestBuilders.get("/api/entries")
+                        MockMvcRequestBuilders.get("/api/entries")
 
 
-        )
-        //Then
+                )
+                //Then
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$").isEmpty());
+                .andExpect(jsonPath("$").isEmpty())
+                .andExpect(status().isOk());
     }
 
 
