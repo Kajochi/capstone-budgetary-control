@@ -5,5 +5,6 @@ public enum Interval {
     MONTHLY,
     QUARTERLY,
     HALF_YEARLY,
-    YEARLY
+    YEARLY,
+    ONCE
 }
