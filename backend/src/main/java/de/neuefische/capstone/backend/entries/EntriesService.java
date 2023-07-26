@@ -10,7 +10,10 @@ public class EntriesService {
 
     private final EntriesRepo entriesRepo;
 
-    public EntriesService(EntriesRepo entriesRepo) {
+    private final IdService idService;
+
+    public EntriesService(EntriesRepo entriesRepo, IdService idService) {
+        this.idService = idService;
         this.entriesRepo = entriesRepo;
     }
 
@@ -20,7 +23,7 @@ public class EntriesService {
 
     public Entry addEntry(EntryWithNoId entryWithNoId) {
         return entriesRepo.save(new Entry(
-                new IdService().createRandomId(),
+                idService.createRandomId(),
                 entryWithNoId.getTitle(),
                 entryWithNoId.getDescription(),
                 entryWithNoId.getDate(),
