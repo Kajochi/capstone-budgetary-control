@@ -12,6 +12,7 @@ import React, {useState} from "react";
 import {Category} from "../model/Category.ts";
 import {Interval} from "../model/Interval.ts";
 import {useStore} from "../hooks/useStore.ts";
+import {useNavigate} from "react-router-dom";
 
 
 export default function EntryAddUpdate() {
@@ -21,6 +22,9 @@ export default function EntryAddUpdate() {
     const [amount, setAmount] = useState<string>("")
     const [date, setDate] = useState<string>("")
     const [category, setCategory] = useState<Category>("INCOME")
+
+    const navigate = useNavigate()
+
 
     const createEntry = useStore((state) => state.createEntry)
 
@@ -36,7 +40,7 @@ export default function EntryAddUpdate() {
             category: category
         }
         createEntry(requestBody)
-
+        navigate("/")
         setTitle("")
         setDescription("")
         setAmount("")
@@ -57,7 +61,7 @@ export default function EntryAddUpdate() {
                                  onChange={(e) => setTitle(e.target.value)}/>
                 <StyledTextField required id="description" label="Description" variant="outlined" value={description}
                                  onChange={(e) => setDescription(e.target.value)}/>
-                <StyledTextField required id="amount" label="Amount" variant="outlined" value={amount}
+                <StyledTextField required id="amount" label="Amount" variant="outlined" value={amount} inputProps={{steps: "0.01"}}
                                 onChange={(e)=>setAmount(e.target.value)}/>
                 <StyledTextField required id="date" variant="outlined" type="date" value={date}
                                 onChange={(e) =>setDate(e.target.value)}/>
@@ -79,7 +83,7 @@ export default function EntryAddUpdate() {
                     </FormControl>
 
                     <StyledToggleGroup id="category" color="primary" value={category} exclusive
-                                       onChange={(e) => setCategory(e.target.value as Category)}
+                                       onChange={(e: any) => setCategory(e.target.value as Category)}
                                        aria-label="Platform">
                         <StyledToggleButton value="INCOME">Income</StyledToggleButton>
                         <StyledToggleButton value="EXPENSE">Expense</StyledToggleButton>
@@ -87,7 +91,7 @@ export default function EntryAddUpdate() {
                 </StyledDiv>
                 <StyleDivButtons>
                 <StyledButton type="submit">Add</StyledButton>
-                <StyledButton>Cancel</StyledButton>
+                <StyledButton onClick={()=>navigate("/")}>Cancel</StyledButton>
                 </StyleDivButtons>
             </StyledForm>
         </div>

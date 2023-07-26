@@ -1,6 +1,4 @@
 
-import AddIcon from '@mui/icons-material/Add';
-import {IconButton} from "@mui/material";
 import styled from "@emotion/styled";
 import {Route, Routes, Link} from "react-router-dom";
 import EntryAddUpdate from "./entryAddUpdate/EntryAddUpdate.tsx";
@@ -17,9 +15,7 @@ export default function App() {
             </Routes>
 
 
-            <Link to={"/add-entry"}>
-                <StyledIconButton size={"small"}><AddIcon/></StyledIconButton>
-            </Link>
+
             <SytledLink to={"/"}>
                 Home
             </SytledLink>
@@ -37,15 +33,6 @@ const StyledH1 = styled.h1`
   justify-content: center;
 `;
 
-const StyledIconButton = styled(IconButton)`
-  background-color: #49e0e3;
-
-  &:hover {
-    background-color: #49e0e3;
-    transition: all 0.3s;
-    transform: scale(1.2);
-  }
-`;
 
 const SytledLink = styled(Link)`
   font-family: "Roboto Light", sans-serif;
