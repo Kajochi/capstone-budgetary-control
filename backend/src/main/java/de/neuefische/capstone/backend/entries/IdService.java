@@ -1,4 +1,4 @@
-package de.neuefische.capstone.backend.model;
+package de.neuefische.capstone.backend.entries;
 
 import org.springframework.stereotype.Component;
 
