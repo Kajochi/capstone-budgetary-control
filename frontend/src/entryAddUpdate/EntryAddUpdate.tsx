@@ -34,7 +34,7 @@ export default function EntryAddUpdate() {
         const requestBody = {
             title: title,
             description: description,
-            amount: amount,
+            amount:  amount.replace( /,/,"." ),
             date: date,
             interval: interval,
             category: category
@@ -82,8 +82,8 @@ export default function EntryAddUpdate() {
                         </Select>
                     </FormControl>
 
-                    <StyledToggleGroup id="category" color="primary" value={category} exclusive
-                                       onChange={(e: any) => setCategory(e.target.value as Category)}
+                    <StyledToggleGroup id="category" color="primary" value={category}
+                                       onChange={(e, newCategory) => setCategory(newCategory as Category)}
                                        aria-label="Platform">
                         <StyledToggleButton value="INCOME">Income</StyledToggleButton>
                         <StyledToggleButton value="EXPENSE">Expense</StyledToggleButton>
