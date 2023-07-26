@@ -30,4 +30,16 @@ class EntriesServiceTest {
         verify(entriesRepo).findAll();
         assertEquals(entries, actual);
     }
+
+    @Test
+    void ReturnAddedEntryWhenEntryIsAdded() {
+        //Given
+        Entry entry = new Entry("1", "testTitle", "testDescription", LocalDate.of(2023, 12, 3), new BigDecimal(34), Category.INCOME, Interval.MONTHLY);
+        //When
+        when(entriesRepo.save(entry)).thenReturn(entry);
+        Entry actual = entriesService.addEntry(entry);
+        //Then
+        verify(entriesRepo).save(entry);
+        assertEquals(entry, actual);
+    }
 }
