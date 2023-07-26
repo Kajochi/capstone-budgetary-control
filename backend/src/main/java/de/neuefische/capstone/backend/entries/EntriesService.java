@@ -7,7 +7,7 @@ import java.util.List;
 @Service
 public class EntriesService {
 
-    EntriesRepo entriesRepo;
+    private final EntriesRepo entriesRepo;
 
     public EntriesService(EntriesRepo entriesRepo) {
         this.entriesRepo = entriesRepo;
