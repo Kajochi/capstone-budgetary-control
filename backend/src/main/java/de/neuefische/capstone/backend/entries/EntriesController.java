@@ -1,9 +1,8 @@
 package de.neuefische.capstone.backend.entries;
 
 import de.neuefische.capstone.backend.model.Entry;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import de.neuefische.capstone.backend.model.EntryWithNoId;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -19,5 +18,10 @@ public class EntriesController {
     @GetMapping
     List<Entry> getEntries() {
         return entriesService.getAllEntries();
+    }
+
+    @PostMapping
+    Entry addEntry(@RequestBody EntryWithNoId entryWithNoId) {
+        return entriesService.addEntry(entryWithNoId);
     }
 }
