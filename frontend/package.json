@@ -14,6 +14,7 @@
     "@emotion/styled": "^11.11.0",
     "@material/card": "^14.0.0",
     "@material/typography": "^14.0.0",
+    "@mui/icons-material": "^5.14.1",
     "@mui/material": "^5.14.2",
     "axios": "^1.4.0",
     "react": "^18.2.0",
