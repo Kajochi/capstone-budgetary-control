@@ -9,12 +9,17 @@ type State = {
     entries: Entry[];
     getEntries: () => void;
     createEntry: (requestBody: EntryWithNoId) => void;
+    isCardUpdated: boolean;
+    updatedCardId: string;
 
 }
 
 
 export const useStore = create<State>((set) => ({
     entries: [],
+    isCardUpdated: false,
+    updatedCardId: "",
+
 
     getEntries: () => {
         axios.get("/api/entries")
@@ -27,7 +32,17 @@ export const useStore = create<State>((set) => ({
         axios.post("/api/entries", requestBody)
             .catch(error)
 
-    }
+    },
+
+    setIsCardUpdated: (updated: boolean) => {
+        set({isCardUpdated: updated})
+    },
+
+    setUpdatedCardId: (id:string) => {
+        set({updatedCardId: id})
+    },
+
+
 
 
 }));
