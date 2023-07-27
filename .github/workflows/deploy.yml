@@ -95,7 +95,7 @@ jobs:
           #Set IP (replace "10.0.1.99" with your ip address)
           script: |
             sudo docker stop cgn-java-23-2-christoph
-            sudo docker cgn-java-23-2-christoph
+            sudo docker rm cgn-java-23-2-christoph
             sudo docker run --pull=always --name cgn-java-23-2-christoph --network capstones --ip 10.0.5.6 --restart always --detach --env MONGO_DB_URI=${{ secrets.MONGO_DB_URI }} kajochin/capstone-budgetary-control:latest
             sleep 15s
             sudo docker logs cgn-java-23-2-christoph
