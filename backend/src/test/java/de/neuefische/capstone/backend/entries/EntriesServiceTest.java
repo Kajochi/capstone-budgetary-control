@@ -41,12 +41,12 @@ class EntriesServiceTest {
         String mockedID = "1";
         Entry entryExpected = new Entry(mockedID, "testTitle", "testDescription", LocalDate.of(2023, 12, 3), new BigDecimal(34), Category.INCOME, Interval.MONTHLY);
         //When
-        when(entriesRepo.save(entryExpected)).thenReturn(entryExpected);
+        when(entriesRepo.insert(entryExpected)).thenReturn(entryExpected);
         when(idService.createRandomId()).thenReturn(mockedID);
         Entry actual = entriesService.addEntry(entryWithNoId);
         //Then
         verify(idService).createRandomId();
-        verify(entriesRepo).save(entryExpected);
+        verify(entriesRepo).insert(entryExpected);
         assertEquals(entryExpected, actual);
     }
 }

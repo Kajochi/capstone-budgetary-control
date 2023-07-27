@@ -22,7 +22,7 @@ public class EntriesService {
     }
 
     public Entry addEntry(EntryWithNoId entryWithNoId) {
-        return entriesRepo.save(new Entry(
+        return entriesRepo.insert(new Entry(
                 idService.createRandomId(),
                 entryWithNoId.getTitle(),
                 entryWithNoId.getDescription(),
