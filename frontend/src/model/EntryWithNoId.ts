@@ -1,12 +1,11 @@
-import {Category} from "./Category.ts";
 import {Interval} from "./Interval.ts";
+import {Category} from "./Category.ts";
 
-export type Entry = {
-    id: string;
+export type EntryWithNoId = {
     title: string;
-    date: string;
     description: string;
+    date: string;
     amount: string;
-    category: Category;
     interval: Interval;
+    category: Category;
 }

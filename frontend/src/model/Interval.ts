@@ -1,0 +1,1 @@
+export type Interval = "ONCE" | "WEEKLY" | "MONTHLY" | "QUARTERLY" | "HALF_YEARLY" | "YEARLY";

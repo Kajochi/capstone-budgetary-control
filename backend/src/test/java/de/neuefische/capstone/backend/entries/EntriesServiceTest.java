@@ -2,6 +2,7 @@ package de.neuefische.capstone.backend.entries;
 
 import de.neuefische.capstone.backend.model.Category;
 import de.neuefische.capstone.backend.model.Entry;
+import de.neuefische.capstone.backend.model.EntryWithNoId;
 import de.neuefische.capstone.backend.model.Interval;
 import org.junit.jupiter.api.Test;
 
@@ -17,7 +18,9 @@ class EntriesServiceTest {
 
     EntriesRepo entriesRepo = mock(EntriesRepo.class);
 
-    EntriesService entriesService = new EntriesService(entriesRepo);
+    IdService idService = mock(IdService.class);
+
+    EntriesService entriesService = new EntriesService(entriesRepo, idService);
 
     @Test
     void ReturnEntriesWhenListIsNotEmpty() {
@@ -29,5 +32,21 @@ class EntriesServiceTest {
         //Then
         verify(entriesRepo).findAll();
         assertEquals(entries, actual);
+    }
+
+    @Test
+    void ReturnAddedEntryWhenEntryIsAdded() {
+        //Given
+        EntryWithNoId entryWithNoId = new EntryWithNoId( "testTitle", "testDescription", LocalDate.of(2023, 12, 3), new BigDecimal(34), Category.INCOME, Interval.MONTHLY);
+        String mockedID = "1";
+        Entry entryExpected = new Entry(mockedID, "testTitle", "testDescription", LocalDate.of(2023, 12, 3), new BigDecimal(34), Category.INCOME, Interval.MONTHLY);
+        //When
+        when(entriesRepo.insert(entryExpected)).thenReturn(entryExpected);
+        when(idService.createRandomId()).thenReturn(mockedID);
+        Entry actual = entriesService.addEntry(entryWithNoId);
+        //Then
+        verify(idService).createRandomId();
+        verify(entriesRepo).insert(entryExpected);
+        assertEquals(entryExpected, actual);
     }
 }

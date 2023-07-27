@@ -1,3 +1,4 @@
+
 name: "Get Logs"
 
 on:
@@ -16,7 +17,7 @@ jobs:
           password: ${{ secrets.SSH_PASSWORD }}
           #Set App Name (replace "example" with "alpha"-"tango")
           script: |
-            docker logs cgn-java-23-2-christoph
+            sudo docker logs cgn-java-23-2-christoph
       - name: Check the deployed service URL
         uses: jtalk/url-health-check-action@v3
         with:
