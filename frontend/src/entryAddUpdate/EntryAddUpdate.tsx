@@ -83,7 +83,7 @@ export default function EntryAddUpdate() {
                     </FormControl>
 
                     <StyledToggleGroup id="category" color="primary" value={category}
-                                       onChange={(e, newCategory) => setCategory(newCategory as Category)}
+                                       onChange={(_, newCategory) => setCategory(newCategory as Category)}
                                        aria-label="Platform">
                         <StyledToggleButton value="INCOME">Income</StyledToggleButton>
                         <StyledToggleButton value="EXPENSE">Expense</StyledToggleButton>
