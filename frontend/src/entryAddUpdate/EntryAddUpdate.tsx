@@ -25,9 +25,10 @@ export default function EntryAddUpdate() {
 
     const navigate = useNavigate()
     const getIsCardUpdated = useStore((state) => state.getIsCardUpdated)
+    const setIsCardUpdated = useStore((state) => state.setIsCardUpdated)
     const getUpdatedCard = useStore((state) => state.getUpdatedCard)
-
     const createEntry = useStore((state) => state.createEntry)
+    const updateEntry = useStore((state) => state.updateEntry)
 
    useEffect(() => {
        const updatedCard = getUpdatedCard()
@@ -39,8 +40,16 @@ export default function EntryAddUpdate() {
            setInterval(updatedCard.interval)
            setCategory(updatedCard.category)
        }
-   }, [])
+   }, [] )
 
+    function resetAllUseStates() {
+        setTitle("")
+        setDescription("")
+        setAmount("")
+        setDate("")
+        setInterval("ONCE")
+        setCategory("INCOME")
+    }
 
     function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault()
@@ -55,13 +64,31 @@ export default function EntryAddUpdate() {
         }
         createEntry(requestBody)
         navigate("/")
-        setTitle("")
-        setDescription("")
-        setAmount("")
-        setDate("")
-        setInterval('ONCE')
-        setCategory('INCOME')
 
+        resetAllUseStates()
+
+    }
+
+    function handlePut(event: React.FormEvent<HTMLFormElement>) {
+        event.preventDefault()
+        const requestBody = {
+            title: title,
+            description: description,
+            amount: amount,
+            date: date,
+            interval: interval,
+            category: category
+        }
+        updateEntry(requestBody, getUpdatedCard()?.id as string)
+        setIsCardUpdated(false)
+        navigate("/")
+        resetAllUseStates()
+    }
+
+    function handleCancel() {
+        navigate("/")
+        resetAllUseStates()
+        setIsCardUpdated(false)
     }
 
 
@@ -105,8 +132,12 @@ export default function EntryAddUpdate() {
                     </StyledToggleGroup>
                 </StyledDiv>
                 <StyleDivButtons>
-                    <StyledButton type="submit">Add</StyledButton>
-                    <StyledButton onClick={() => navigate("/")}>Cancel</StyledButton>
+                    { getIsCardUpdated() ?
+                        (<StyledButton onClick={handlePut}>Save</StyledButton>) :
+                        (<StyledButton type="submit">Add</StyledButton>)
+                    }
+
+                    <StyledButton onClick={handleCancel}>Cancel</StyledButton>
                 </StyleDivButtons>
             </StyledForm>
         </div>
