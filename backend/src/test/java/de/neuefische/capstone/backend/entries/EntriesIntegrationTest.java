@@ -39,26 +39,55 @@ class EntriesIntegrationTest {
     void WhenEntryIsAddedReturnAddedEntry() throws Exception {
         //When
         mockMvc.perform(
-                MockMvcRequestBuilders.post("/api/entries")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\n" +
-                                "    \"title\": \"testTitle\",\n" +
-                                "    \"description\": \"testDescription\",\n" +
-                                "    \"date\": \"2023-12-03\",\n" +
-                                "    \"amount\": 34,\n" +
-                                "    \"category\": \"INCOME\",\n" +
-                                "    \"interval\": \"MONTHLY\"\n" +
-                                "}")
-        )
-        //Then
+                        MockMvcRequestBuilders.post("/api/entries")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content("{\n" +
+                                        "    \"title\": \"testTitle\",\n" +
+                                        "    \"description\": \"testDescription\",\n" +
+                                        "    \"date\": \"2023-12-03\",\n" +
+                                        "    \"amount\": 34,\n" +
+                                        "    \"category\": \"INCOME\",\n" +
+                                        "    \"interval\": \"MONTHLY\"\n" +
+                                        "}")
+                )
+                //Then
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.title").value("testTitle"))
                 .andExpect(jsonPath("$.description").value("testDescription"))
                 .andExpect(jsonPath("$.date").value("2023-12-03"))
                 .andExpect(jsonPath("$.amount").value(34))
                 .andExpect(jsonPath("$.category").value("INCOME"))
-                .andExpect(jsonPath("$.interval").value("MONTHLY"));
+                .andExpect(jsonPath("$.interval").value("MONTHLY"))
+                .andExpect(status().isOk());
     }
 
+    @DirtiesContext
+    @Test
+    void WhenEntryIsUpdatedReturnUpdatedEntry() throws Exception {
+        //Given
+        String id = "1";
+        //When
+        mockMvc.perform(
+                        MockMvcRequestBuilders.put("/api/entries/" + id)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content("{\n" +
+                                        "    \"title\": \"changedTitle\",\n" +
+                                        "    \"description\": \"changedDescription\",\n" +
+                                        "    \"date\": \"2023-12-03\",\n" +
+                                        "    \"amount\": 34,\n" +
+                                        "    \"category\": \"INCOME\",\n" +
+                                        "    \"interval\": \"MONTHLY\"\n" +
+                                        "}")
+                )
+                //Then
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.title").value("changedTitle"))
+                .andExpect(jsonPath("$.description").value("changedDescription"))
+                .andExpect(jsonPath("$.date").value("2023-12-03"))
+                .andExpect(jsonPath("$.amount").value(34))
+                .andExpect(jsonPath("$.category").value("INCOME"))
+                .andExpect(jsonPath("$.interval").value("MONTHLY"))
+                .andExpect(status().isOk());
+    }
 
 }
