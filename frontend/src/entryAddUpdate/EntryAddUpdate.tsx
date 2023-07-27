@@ -8,7 +8,7 @@ import {
     ToggleButton,
     ToggleButtonGroup
 } from "@mui/material";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Category} from "../model/Category.ts";
 import {Interval} from "../model/Interval.ts";
 import {useStore} from "../hooks/useStore.ts";
@@ -24,9 +24,23 @@ export default function EntryAddUpdate() {
     const [category, setCategory] = useState<Category>("INCOME")
 
     const navigate = useNavigate()
-
+    const getIsCardUpdated = useStore((state) => state.getIsCardUpdated)
+    const getUpdatedCard = useStore((state) => state.getUpdatedCard)
 
     const createEntry = useStore((state) => state.createEntry)
+
+   useEffect(() => {
+       const updatedCard = getUpdatedCard()
+       if (getIsCardUpdated() && updatedCard) {
+           setTitle(updatedCard.title)
+           setDescription(updatedCard.description)
+           setAmount(updatedCard.amount)
+           setDate(updatedCard.date)
+           setInterval(updatedCard.interval)
+           setCategory(updatedCard.category)
+       }
+   }, [])
+
 
     function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault()
@@ -34,7 +48,7 @@ export default function EntryAddUpdate() {
         const requestBody = {
             title: title,
             description: description,
-            amount:  amount.replace( /,/,"." ),
+            amount: amount.replace(/,/, "."),
             date: date,
             interval: interval,
             category: category
@@ -61,10 +75,11 @@ export default function EntryAddUpdate() {
                                  onChange={(e) => setTitle(e.target.value)}/>
                 <StyledTextField required id="description" label="Description" variant="outlined" value={description}
                                  onChange={(e) => setDescription(e.target.value)}/>
-                <StyledTextField required id="amount" label="Amount" variant="outlined" value={amount} inputProps={{steps: "0.01"}}
-                                onChange={(e)=>setAmount(e.target.value)}/>
+                <StyledTextField required id="amount" label="Amount" variant="outlined" value={amount}
+                                 inputProps={{steps: "0.01"}}
+                                 onChange={(e) => setAmount(e.target.value)}/>
                 <StyledTextField required id="date" variant="outlined" type="date" value={date}
-                                onChange={(e) =>setDate(e.target.value)}/>
+                                 onChange={(e) => setDate(e.target.value)}/>
                 <StyledDiv>
 
                     <FormControl>
@@ -90,8 +105,8 @@ export default function EntryAddUpdate() {
                     </StyledToggleGroup>
                 </StyledDiv>
                 <StyleDivButtons>
-                <StyledButton type="submit">Add</StyledButton>
-                <StyledButton onClick={()=>navigate("/")}>Cancel</StyledButton>
+                    <StyledButton type="submit">Add</StyledButton>
+                    <StyledButton onClick={() => navigate("/")}>Cancel</StyledButton>
                 </StyleDivButtons>
             </StyledForm>
         </div>
@@ -136,16 +151,16 @@ const StyledToggleGroup = styled(ToggleButtonGroup)`
 `;
 
 const StyledButton = styled(Button)`
-    font-family: "Roboto Light", sans-serif;
-    display: flex;
-    justify-content: center;
-    margin: 16px;
+  font-family: "Roboto Light", sans-serif;
+  display: flex;
+  justify-content: center;
+  margin: 16px;
   border: 1px solid black;
   width: 130px;
 `;
 
 const StyleDivButtons = styled.div`
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
   justify-content: center;
-    `;
+`;
