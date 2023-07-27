@@ -32,4 +32,16 @@ public class EntriesService {
                 entryWithNoId.getInterval()
         ));
     }
+
+    public Entry updateEntry(EntryWithNoId entryWithNoId, String id) {
+        return entriesRepo.save(new Entry(
+                id,
+                entryWithNoId.getTitle(),
+                entryWithNoId.getDescription(),
+                entryWithNoId.getDate(),
+                entryWithNoId.getAmount(),
+                entryWithNoId.getCategory(),
+                entryWithNoId.getInterval()
+        ));
+    }
 }

@@ -41,23 +41,25 @@ class EntriesIntegrationTest {
         mockMvc.perform(
                         MockMvcRequestBuilders.post("/api/entries")
                                 .contentType(MediaType.APPLICATION_JSON)
-                                .content("{\n" +
-                                        "    \"title\": \"testTitle\",\n" +
-                                        "    \"description\": \"testDescription\",\n" +
-                                        "    \"date\": \"2023-12-03\",\n" +
-                                        "    \"amount\": 34,\n" +
-                                        "    \"category\": \"INCOME\",\n" +
-                                        "    \"interval\": \"MONTHLY\"\n" +
-                                        "}")
+                                .content("""
+                                        {
+                                            "title": "testTitle",
+                                            "description": "testDescription",
+                                            "date": "2023-12-03",
+                                            "amount": "34",
+                                            "category": "INCOME",
+                                            "interval": "MONTHLY"
+                                        }
+                                        """)
                 )
                 //Then
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.title").value("testTitle"))
-                .andExpect(jsonPath("$.description").value("testDescription"))
-                .andExpect(jsonPath("$.date").value("2023-12-03"))
-                .andExpect(jsonPath("$.amount").value(34))
-                .andExpect(jsonPath("$.category").value("INCOME"))
-                .andExpect(jsonPath("$.interval").value("MONTHLY"))
+                .andExpect(jsonPath("title").value("testTitle"))
+                .andExpect(jsonPath("description").value("testDescription"))
+                .andExpect(jsonPath("date").value("2023-12-03"))
+                .andExpect(jsonPath("amount").value("34"))
+                .andExpect(jsonPath("category").value("INCOME"))
+                .andExpect(jsonPath("interval").value("MONTHLY"))
                 .andExpect(status().isOk());
     }
 
@@ -70,23 +72,25 @@ class EntriesIntegrationTest {
         mockMvc.perform(
                         MockMvcRequestBuilders.put("/api/entries/" + id)
                                 .contentType(MediaType.APPLICATION_JSON)
-                                .content("{\n" +
-                                        "    \"title\": \"changedTitle\",\n" +
-                                        "    \"description\": \"changedDescription\",\n" +
-                                        "    \"date\": \"2023-12-03\",\n" +
-                                        "    \"amount\": 34,\n" +
-                                        "    \"category\": \"INCOME\",\n" +
-                                        "    \"interval\": \"MONTHLY\"\n" +
-                                        "}")
+                                .content("""
+                                        {
+                                            "title": "changedTitle",
+                                            "description": "changedDescription",
+                                            "date": "2023-12-03",
+                                            "amount": "34",
+                                            "category": "INCOME",
+                                            "interval": "MONTHLY"
+                                        }
+                                        """)
                 )
                 //Then
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.title").value("changedTitle"))
-                .andExpect(jsonPath("$.description").value("changedDescription"))
-                .andExpect(jsonPath("$.date").value("2023-12-03"))
-                .andExpect(jsonPath("$.amount").value(34))
-                .andExpect(jsonPath("$.category").value("INCOME"))
-                .andExpect(jsonPath("$.interval").value("MONTHLY"))
+                .andExpect(jsonPath("title").value("changedTitle"))
+                .andExpect(jsonPath("description").value("changedDescription"))
+                .andExpect(jsonPath("date").value("2023-12-03"))
+                .andExpect(jsonPath("amount").value("34"))
+                .andExpect(jsonPath("category").value("INCOME"))
+                .andExpect(jsonPath("interval").value("MONTHLY"))
                 .andExpect(status().isOk());
     }
 
