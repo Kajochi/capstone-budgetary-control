@@ -2,19 +2,24 @@ import {Entry} from "../model/Entry.ts";
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
+import styled from "@emotion/styled";
+import {useNavigate} from "react-router-dom";
 
 type Props = {
     entry: Entry;
 }
 export default function EntryCard(props: Props) {
 
-
+    const navigate = useNavigate()
+function handleClick() {
+    navigate("/add-entry/")
+}
 
     return (
         <>
-            <Card sx={{minWidth: 275, margin: '16px'}}>
-                <CardContent style={{background: "#49e0e3", display: "flex", flexDirection: "row"}}>
-                    <div style={{display: "flex", flexDirection: "column"}}>
+            <StyledCard onClick={handleClick}>
+                <StyledCardContent>
+                    <StyledDivLeftSide>
                         <Typography variant="h5" gutterBottom>
                             {props.entry.title}
                         </Typography>
@@ -28,18 +33,39 @@ export default function EntryCard(props: Props) {
                             {props.entry.category}
                         </Typography>
 
-                    </div>
-                    <div style={{display: 'flex', flexDirection: 'column', marginLeft: 'auto'}}>
+                    </StyledDivLeftSide>
+                    <StyledDivRightSide>
                         <Typography variant="h5">
                             {props.entry.amount}€
                         </Typography>
                         <Typography variant="body2">
                             {props.entry.date}
                         </Typography>
-                    </div>
-                </CardContent>
+                    </StyledDivRightSide>
+                </StyledCardContent>
 
-            </Card>
+            </StyledCard>
         </>
     )
 }
+
+const StyledCard = styled(Card)`
+    min-width: 275px;
+    margin: 16px;
+    background: #49e0e3;
+    
+    ;`
+const StyledCardContent = styled(CardContent)`
+    display: flex;
+    flex-direction: row;
+    ;`
+const StyledDivLeftSide = styled.div`
+    display: flex;
+    flex-direction: column;
+    ;`
+
+const StyledDivRightSide = styled.div`
+    display: flex;
+    flex-direction: column;
+    margin-left: auto;
+    ;`
