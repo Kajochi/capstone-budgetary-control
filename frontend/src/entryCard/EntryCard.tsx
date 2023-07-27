@@ -4,6 +4,7 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import styled from "@emotion/styled";
 import {useNavigate} from "react-router-dom";
+import {useStore} from "../hooks/useStore.ts";
 
 type Props = {
     entry: Entry;
@@ -11,8 +12,13 @@ type Props = {
 export default function EntryCard(props: Props) {
 
     const navigate = useNavigate()
+
+    const setIsCardUpdated  = useStore((state) => state.setIsCardUpdated)
+    const setUpdatedCardId = useStore((state) => state.setUpdatedCardId)
 function handleClick() {
     navigate("/add-entry/")
+    setIsCardUpdated(true)
+    setUpdatedCardId(props.entry.id)
 }
 
     return (
