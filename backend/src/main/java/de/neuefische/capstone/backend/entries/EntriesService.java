@@ -46,4 +46,9 @@ public class EntriesService {
 
         return entriesRepo.save(updatedEntry);
     }
+
+    public void deleteEntry(String id) {
+        if (!entriesRepo.existsById(id)) throw new IllegalArgumentException();
+        entriesRepo.deleteById(id);
+    }
 }

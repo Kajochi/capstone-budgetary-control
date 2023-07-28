@@ -51,7 +51,7 @@ class EntriesIntegrationTest {
         String jsonRequestBody = objectMapper.writeValueAsString(new EntryWithNoId(
                 "testTitle",
                 "testDescription",
-                LocalDate.of(2023, 12, 03),
+                LocalDate.of(2023, 12, 3),
                 new BigDecimal(34),
                 Category.INCOME,
                 Interval.MONTHLY
