@@ -53,7 +53,11 @@ export default function EntryAddUpdate() {
 
     function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault()
+        getIsCardUpdated()? handlePut() : handlePost()
 
+    }
+
+    function handlePost() {
         const requestBody = {
             title: title,
             description: description,
@@ -69,8 +73,8 @@ export default function EntryAddUpdate() {
 
     }
 
-    function handlePut(event: React.FormEvent<HTMLFormElement>) {
-        event.preventDefault()
+    function handlePut() {
+
         const requestBody = {
             title: title,
             description: description,
@@ -85,6 +89,9 @@ export default function EntryAddUpdate() {
         resetAllUseStates()
     }
 
+    function handleChangeCategory(_: React.MouseEvent<HTMLElement>, newCategory: Category) {
+        setCategory(newCategory)
+    }
     function handleCancel() {
         navigate("/")
         resetAllUseStates()
@@ -124,8 +131,8 @@ export default function EntryAddUpdate() {
                         </Select>
                     </FormControl>
 
-                    <StyledToggleGroup id="category" color="primary" value={category}
-                                       onChange={(_, newCategory) => setCategory(newCategory as Category)}
+                    <StyledToggleGroup id="category" color="primary" value={category} exclusive
+                                       onChange={handleChangeCategory}
                                        aria-label="Platform">
                         <StyledToggleButton value="INCOME">Income</StyledToggleButton>
                         <StyledToggleButton value="EXPENSE">Expense</StyledToggleButton>
@@ -133,7 +140,7 @@ export default function EntryAddUpdate() {
                 </StyledDiv>
                 <StyleDivButtons>
                     { getIsCardUpdated() ?
-                        (<StyledButton onClick={handlePut}>Save</StyledButton>) :
+                        (<StyledButton type="submit">Save</StyledButton>) :
                         (<StyledButton type="submit">Add</StyledButton>)
                     }
 
