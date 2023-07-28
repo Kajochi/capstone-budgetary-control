@@ -2,6 +2,7 @@ package de.neuefische.capstone.backend.entries;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.neuefische.capstone.backend.model.Category;
+import de.neuefische.capstone.backend.model.Entry;
 import de.neuefische.capstone.backend.model.EntryWithNoId;
 import de.neuefische.capstone.backend.model.Interval;
 import org.junit.jupiter.api.Test;
@@ -27,6 +28,7 @@ class EntriesIntegrationTest {
     EntriesService entriesService;
     @Autowired
     ObjectMapper objectMapper;
+
     @DirtiesContext
     @Test
     void WhenListIsEmptyReturnEmptyList() throws Exception {
@@ -49,7 +51,7 @@ class EntriesIntegrationTest {
         String jsonRequestBody = objectMapper.writeValueAsString(new EntryWithNoId(
                 "testTitle",
                 "testDescription",
-                LocalDate.of(2023,12,03) ,
+                LocalDate.of(2023, 12, 03),
                 new BigDecimal(34),
                 Category.INCOME,
                 Interval.MONTHLY
@@ -78,7 +80,7 @@ class EntriesIntegrationTest {
         String jsonRequestBody = objectMapper.writeValueAsString(new EntryWithNoId(
                 "changedTitle",
                 "changedDescription",
-                LocalDate.of(2023,12,3) ,
+                LocalDate.of(2023, 12, 3),
                 new BigDecimal(34),
                 Category.INCOME,
                 Interval.MONTHLY
@@ -101,4 +103,42 @@ class EntriesIntegrationTest {
                 .andExpect(status().isOk());
     }
 
+    @DirtiesContext
+    @Test
+    void WhenDeleteEntryReturnEmptyList() throws Exception {
+        //Given
+        String jsonRequestBody = objectMapper.writeValueAsString(new EntryWithNoId(
+                "testTitle",
+                "testDescription",
+                LocalDate.of(2023, 12, 3),
+                new BigDecimal(34),
+                Category.INCOME,
+                Interval.MONTHLY
+        ));
+
+        String responseString = mockMvc.perform(
+                MockMvcRequestBuilders.post("/api/entries")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(jsonRequestBody)
+        )
+                        .andReturn()
+                        .getResponse()
+                        .getContentAsString();
+
+        Entry entry = objectMapper.readValue(responseString, Entry.class);
+        //When
+        mockMvc.perform(
+                MockMvcRequestBuilders.delete("/api/entries/" + entry.getId())
+
+        );
+        //Then
+        mockMvc.perform(
+                        MockMvcRequestBuilders.get("/api/entries")
+                )
+                //Then
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().json("[]"));
+
+    }
 }
