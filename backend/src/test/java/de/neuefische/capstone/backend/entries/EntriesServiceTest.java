@@ -49,4 +49,18 @@ class EntriesServiceTest {
         verify(entriesRepo).insert(entryExpected);
         assertEquals(entryExpected, actual);
     }
+
+    @Test
+    void WhenEntryIsUpdatedReturnUpdatedEntry (){
+        //Given
+        Entry expectedEntry = new Entry("1", "changedTitle", "changedDescription", LocalDate.of(2023, 12, 3), new BigDecimal(34), Category.INCOME, Interval.MONTHLY);
+        EntryWithNoId entryWithNoId = new EntryWithNoId( "changedTitle", "changedDescription", LocalDate.of(2023, 12, 3), new BigDecimal(34), Category.INCOME, Interval.MONTHLY);
+        String iD = "1";
+        //When
+        when(entriesRepo.save(expectedEntry)).thenReturn(expectedEntry);
+        Entry actual = entriesService.updateEntry(entryWithNoId, iD);
+        //Then
+        verify(entriesRepo).save(expectedEntry);
+        assertEquals(expectedEntry, actual);
+    }
 }

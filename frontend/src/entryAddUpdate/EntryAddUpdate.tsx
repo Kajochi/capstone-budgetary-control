@@ -8,7 +8,7 @@ import {
     ToggleButton,
     ToggleButtonGroup
 } from "@mui/material";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Category} from "../model/Category.ts";
 import {Interval} from "../model/Interval.ts";
 import {useStore} from "../hooks/useStore.ts";
@@ -24,30 +24,78 @@ export default function EntryAddUpdate() {
     const [category, setCategory] = useState<Category>("INCOME")
 
     const navigate = useNavigate()
-
-
+    const getIsCardUpdated = useStore((state) => state.getIsCardUpdated)
+    const setIsCardUpdated = useStore((state) => state.setIsCardUpdated)
+    const getUpdatedCard = useStore((state) => state.getUpdatedCard)
     const createEntry = useStore((state) => state.createEntry)
+    const updateEntry = useStore((state) => state.updateEntry)
+
+   useEffect(() => {
+       const updatedCard = getUpdatedCard()
+       if (getIsCardUpdated() && updatedCard) {
+           setTitle(updatedCard.title)
+           setDescription(updatedCard.description)
+           setAmount(updatedCard.amount)
+           setDate(updatedCard.date)
+           setInterval(updatedCard.interval)
+           setCategory(updatedCard.category)
+       }
+   }, [] )
+
+    function resetAllUseStates() {
+        setTitle("")
+        setDescription("")
+        setAmount("")
+        setDate("")
+        setInterval("ONCE")
+        setCategory("INCOME")
+    }
 
     function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault()
+        getIsCardUpdated()? handlePut() : handlePost()
 
+    }
+
+    function handlePost() {
         const requestBody = {
             title: title,
             description: description,
-            amount:  amount.replace( /,/,"." ),
+            amount: amount.replace(/,/, "."),
             date: date,
             interval: interval,
             category: category
         }
         createEntry(requestBody)
         navigate("/")
-        setTitle("")
-        setDescription("")
-        setAmount("")
-        setDate("")
-        setInterval('ONCE')
-        setCategory('INCOME')
 
+        resetAllUseStates()
+
+    }
+
+    function handlePut() {
+
+        const requestBody = {
+            title: title,
+            description: description,
+            amount: amount,
+            date: date,
+            interval: interval,
+            category: category
+        }
+        updateEntry(requestBody, getUpdatedCard()?.id as string)
+        setIsCardUpdated(false)
+        navigate("/")
+        resetAllUseStates()
+    }
+
+    function handleChangeCategory(_: React.MouseEvent<HTMLElement>, newCategory: Category) {
+        setCategory(newCategory)
+    }
+    function handleCancel() {
+        navigate("/")
+        resetAllUseStates()
+        setIsCardUpdated(false)
     }
 
 
@@ -61,10 +109,11 @@ export default function EntryAddUpdate() {
                                  onChange={(e) => setTitle(e.target.value)}/>
                 <StyledTextField required id="description" label="Description" variant="outlined" value={description}
                                  onChange={(e) => setDescription(e.target.value)}/>
-                <StyledTextField required id="amount" label="Amount" variant="outlined" value={amount} inputProps={{steps: "0.01"}}
-                                onChange={(e)=>setAmount(e.target.value)}/>
+                <StyledTextField required id="amount" label="Amount" variant="outlined" value={amount}
+                                 inputProps={{steps: "0.01"}}
+                                 onChange={(e) => setAmount(e.target.value)}/>
                 <StyledTextField required id="date" variant="outlined" type="date" value={date}
-                                onChange={(e) =>setDate(e.target.value)}/>
+                                 onChange={(e) => setDate(e.target.value)}/>
                 <StyledDiv>
 
                     <FormControl>
@@ -82,16 +131,20 @@ export default function EntryAddUpdate() {
                         </Select>
                     </FormControl>
 
-                    <StyledToggleGroup id="category" color="primary" value={category}
-                                       onChange={(_, newCategory) => setCategory(newCategory as Category)}
+                    <StyledToggleGroup id="category" color="primary" value={category} exclusive
+                                       onChange={handleChangeCategory}
                                        aria-label="Platform">
                         <StyledToggleButton value="INCOME">Income</StyledToggleButton>
                         <StyledToggleButton value="EXPENSE">Expense</StyledToggleButton>
                     </StyledToggleGroup>
                 </StyledDiv>
                 <StyleDivButtons>
-                <StyledButton type="submit">Add</StyledButton>
-                <StyledButton onClick={()=>navigate("/")}>Cancel</StyledButton>
+                    { getIsCardUpdated() ?
+                        (<StyledButton type="submit">Save</StyledButton>) :
+                        (<StyledButton type="submit">Add</StyledButton>)
+                    }
+
+                    <StyledButton onClick={handleCancel}>Cancel</StyledButton>
                 </StyleDivButtons>
             </StyledForm>
         </div>
@@ -136,16 +189,16 @@ const StyledToggleGroup = styled(ToggleButtonGroup)`
 `;
 
 const StyledButton = styled(Button)`
-    font-family: "Roboto Light", sans-serif;
-    display: flex;
-    justify-content: center;
-    margin: 16px;
+  font-family: "Roboto Light", sans-serif;
+  display: flex;
+  justify-content: center;
+  margin: 16px;
   border: 1px solid black;
   width: 130px;
 `;
 
 const StyleDivButtons = styled.div`
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
   justify-content: center;
-    `;
+`;

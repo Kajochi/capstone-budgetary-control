@@ -24,4 +24,9 @@ public class EntriesController {
     Entry addEntry(@RequestBody EntryWithNoId entryWithNoId) {
         return entriesService.addEntry(entryWithNoId);
     }
+
+    @PutMapping("{id}")
+    Entry updateEntry(@RequestBody EntryWithNoId entryWithNoId, @PathVariable String id) {
+        return entriesService.updateEntry(entryWithNoId, id);
+    }
 }
