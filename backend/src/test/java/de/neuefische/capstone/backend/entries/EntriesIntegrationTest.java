@@ -1,5 +1,9 @@
 package de.neuefische.capstone.backend.entries;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import de.neuefische.capstone.backend.model.Category;
+import de.neuefische.capstone.backend.model.EntryWithNoId;
+import de.neuefische.capstone.backend.model.Interval;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -8,6 +12,9 @@ import org.springframework.http.MediaType;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -18,7 +25,8 @@ class EntriesIntegrationTest {
     MockMvc mockMvc;
     @Autowired
     EntriesService entriesService;
-
+    @Autowired
+    ObjectMapper objectMapper;
     @DirtiesContext
     @Test
     void WhenListIsEmptyReturnEmptyList() throws Exception {
@@ -37,20 +45,20 @@ class EntriesIntegrationTest {
     @DirtiesContext
     @Test
     void WhenEntryIsAddedReturnAddedEntry() throws Exception {
+        //Given
+        String jsonRequestBody = objectMapper.writeValueAsString(new EntryWithNoId(
+                "testTitle",
+                "testDescription",
+                LocalDate.of(2023,12,03) ,
+                new BigDecimal(34),
+                Category.INCOME,
+                Interval.MONTHLY
+        ));
         //When
         mockMvc.perform(
                         MockMvcRequestBuilders.post("/api/entries")
                                 .contentType(MediaType.APPLICATION_JSON)
-                                .content("""
-                                        {
-                                            "title": "testTitle",
-                                            "description": "testDescription",
-                                            "date": "2023-12-03",
-                                            "amount": "34",
-                                            "category": "INCOME",
-                                            "interval": "MONTHLY"
-                                        }
-                                        """)
+                                .content(jsonRequestBody)
                 )
                 //Then
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -67,21 +75,20 @@ class EntriesIntegrationTest {
     @Test
     void WhenEntryIsUpdatedReturnUpdatedEntry() throws Exception {
         //Given
+        String jsonRequestBody = objectMapper.writeValueAsString(new EntryWithNoId(
+                "changedTitle",
+                "changedDescription",
+                LocalDate.of(2023,12,3) ,
+                new BigDecimal(34),
+                Category.INCOME,
+                Interval.MONTHLY
+        ));
         String id = "1";
         //When
         mockMvc.perform(
                         MockMvcRequestBuilders.put("/api/entries/" + id)
                                 .contentType(MediaType.APPLICATION_JSON)
-                                .content("""
-                                        {
-                                            "title": "changedTitle",
-                                            "description": "changedDescription",
-                                            "date": "2023-12-03",
-                                            "amount": "34",
-                                            "category": "INCOME",
-                                            "interval": "MONTHLY"
-                                        }
-                                        """)
+                                .content(jsonRequestBody)
                 )
                 //Then
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
