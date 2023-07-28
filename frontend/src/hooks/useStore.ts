@@ -41,7 +41,7 @@ export const useStore = create<State>((set, get) => ({
     updateEntry: (requestBody: EntryWithNoId, id: string) => {
         axios.put(
             "/api/entries/" + id,
-            requestBody as EntryWithNoId
+            requestBody
         )
     },
 
