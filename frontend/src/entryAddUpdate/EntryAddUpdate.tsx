@@ -29,6 +29,7 @@ export default function EntryAddUpdate() {
     const getUpdatedCard = useStore((state) => state.getUpdatedCard)
     const createEntry = useStore((state) => state.createEntry)
     const updateEntry = useStore((state) => state.updateEntry)
+    const deleteEntry = useStore((state) => state.deleteEntry)
 
    useEffect(() => {
        const updatedCard = getUpdatedCard()
@@ -84,7 +85,12 @@ export default function EntryAddUpdate() {
             category: category
         }
         updateEntry(requestBody, getUpdatedCard()?.id as string)
-        setIsCardUpdated(false)
+        navigate("/")
+        resetAllUseStates()
+    }
+
+    function handleDelete() {
+        deleteEntry(getUpdatedCard()?.id as string)
         navigate("/")
         resetAllUseStates()
     }
@@ -140,7 +146,9 @@ export default function EntryAddUpdate() {
                 </StyledDiv>
                 <StyleDivButtons>
                     { getIsCardUpdated() ?
-                        (<StyledButton type="submit">Save</StyledButton>) :
+                        (<>
+                            <StyledButton type="submit">Save</StyledButton>
+                         <StyledButton onClick={handleDelete}>Delete</StyledButton>  </> ) :
                         (<StyledButton type="submit">Add</StyledButton>)
                     }
 
