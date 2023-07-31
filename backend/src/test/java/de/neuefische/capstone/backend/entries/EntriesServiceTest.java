@@ -108,7 +108,11 @@ class EntriesServiceTest {
     void WhenEntryIsDeletedReturnNothing() {
         //Given
         String iD = "1";
+
         //When
+
+        when(entriesRepo.existsById(iD)).thenReturn(true);
+
         entriesService.deleteEntry(iD);
         //Then
         verify(entriesRepo).deleteById(iD);
