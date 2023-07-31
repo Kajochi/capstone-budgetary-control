@@ -25,7 +25,15 @@ class EntriesServiceTest {
     @Test
     void ReturnEntriesWhenListIsNotEmpty() {
         //Given
-        List<Entry> entries = List.of(new Entry("1", "testTitle", "testDescription", LocalDate.of(2023, 12, 3), new BigDecimal(34), Category.INCOME, Interval.MONTHLY));
+        List<Entry> entries = List.of(
+                new Entry("1",
+                        "testTitle",
+                        "testDescription",
+                        LocalDate.of(2023, 12, 3),
+                        new BigDecimal(34),
+                        Category.INCOME,
+                        Interval.MONTHLY)
+        );
         //When
         when(entriesRepo.findAll()).thenReturn(entries);
         List<Entry> actual = entriesService.getAllEntries();
@@ -37,9 +45,24 @@ class EntriesServiceTest {
     @Test
     void ReturnAddedEntryWhenEntryIsAdded() {
         //Given
-        EntryWithNoId entryWithNoId = new EntryWithNoId( "testTitle", "testDescription", LocalDate.of(2023, 12, 3), new BigDecimal(34), Category.INCOME, Interval.MONTHLY);
+        EntryWithNoId entryWithNoId = new EntryWithNoId(
+                "testTitle",
+                "testDescription",
+                LocalDate.of(2023, 12, 3),
+                new BigDecimal(34),
+                Category.INCOME,
+                Interval.MONTHLY
+        );
+
         String mockedID = "1";
-        Entry entryExpected = new Entry(mockedID, "testTitle", "testDescription", LocalDate.of(2023, 12, 3), new BigDecimal(34), Category.INCOME, Interval.MONTHLY);
+        Entry entryExpected = new Entry(
+                mockedID,
+                "testTitle",
+                "testDescription",
+                LocalDate.of(2023, 12, 3),
+                new BigDecimal(34),
+                Category.INCOME,
+                Interval.MONTHLY);
         //When
         when(entriesRepo.insert(entryExpected)).thenReturn(entryExpected);
         when(idService.createRandomId()).thenReturn(mockedID);
@@ -51,10 +74,27 @@ class EntriesServiceTest {
     }
 
     @Test
-    void WhenEntryIsUpdatedReturnUpdatedEntry (){
+    void WhenEntryIsUpdatedReturnUpdatedEntry() {
         //Given
-        Entry expectedEntry = new Entry("1", "changedTitle", "changedDescription", LocalDate.of(2023, 12, 3), new BigDecimal(34), Category.INCOME, Interval.MONTHLY);
-        EntryWithNoId entryWithNoId = new EntryWithNoId( "changedTitle", "changedDescription", LocalDate.of(2023, 12, 3), new BigDecimal(34), Category.INCOME, Interval.MONTHLY);
+        Entry expectedEntry = new Entry(
+                "1",
+                "changedTitle",
+                "changedDescription",
+                LocalDate.of(2023, 12, 3),
+                new BigDecimal(34),
+                Category.INCOME,
+                Interval.MONTHLY
+        );
+
+        EntryWithNoId entryWithNoId = new EntryWithNoId(
+                "changedTitle",
+                "changedDescription",
+                LocalDate.of(2023, 12, 3),
+                new BigDecimal(34),
+                Category.INCOME,
+                Interval.MONTHLY
+        );
+
         String iD = "1";
         //When
         when(entriesRepo.save(expectedEntry)).thenReturn(expectedEntry);
@@ -62,5 +102,29 @@ class EntriesServiceTest {
         //Then
         verify(entriesRepo).save(expectedEntry);
         assertEquals(expectedEntry, actual);
+    }
+
+    @Test
+    void WhenEntryIsDeletedReturnNothing() {
+        //Given
+        String iD = "1";
+
+        //When
+
+        when(entriesRepo.existsById(iD)).thenReturn(true);
+
+        entriesService.deleteEntry(iD);
+        //Then
+        verify(entriesRepo).deleteById(iD);
+    }
+
+    @Test
+    void WhenEntryIsDeletedAndDoesNotExistThrowException() {
+        //Given
+        String iD = "1";
+        //When
+        when(entriesRepo.existsById(iD)).thenReturn(false);
+        //Then
+        assertThrows(IllegalArgumentException.class, () -> entriesService.deleteEntry(iD));
     }
 }

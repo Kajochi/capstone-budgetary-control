@@ -10,6 +10,7 @@ type State = {
     getEntries: () => void;
     createEntry: (requestBody: EntryWithNoId) => void;
     updateEntry: (requestBody: EntryWithNoId, id: string) => void;
+    deleteEntry: (id: string) => void;
     isCardUpdated: boolean;
     updatedCardId: string;
     setIsCardUpdated: (updated: boolean) => void;
@@ -33,16 +34,36 @@ export const useStore = create<State>((set, get) => ({
     },
 
     createEntry: (requestBody: EntryWithNoId) => {
+        const getEntries = get().getEntries
         axios.post("/api/entries", requestBody)
             .catch(error)
+            .then(() => {
+                getEntries();
+            })
 
     },
 
     updateEntry: (requestBody: EntryWithNoId, id: string) => {
+        const getEntries = get().getEntries
         axios.put(
             "/api/entries/" + id,
             requestBody
-        )
+        ).catch(error)
+            .finally(()=> {
+                getEntries();
+                set({isCardUpdated: false})
+            })
+
+    },
+
+    deleteEntry: (id: string) => {
+        const getEntries = get().getEntries
+        axios.delete("/api/entries/" + id)
+            .catch(error)
+            .then(() => {
+                getEntries();
+                set({isCardUpdated: false})
+            })
     },
 
     setIsCardUpdated: (updated: boolean) => {

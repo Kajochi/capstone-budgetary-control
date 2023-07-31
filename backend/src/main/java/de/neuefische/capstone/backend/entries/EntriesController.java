@@ -29,4 +29,9 @@ public class EntriesController {
     Entry updateEntry(@RequestBody EntryWithNoId entryWithNoId, @PathVariable String id) {
         return entriesService.updateEntry(entryWithNoId, id);
     }
+
+    @DeleteMapping("{id}")
+    void deleteEntry(@PathVariable String id) {
+        entriesService.deleteEntry(id);
+    }
 }
