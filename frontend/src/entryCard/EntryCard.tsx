@@ -38,6 +38,9 @@ function handleClick() {
                         <Typography variant="body2">
                             {props.entry.category}
                         </Typography>
+                        <Typography variant="body2">
+                            {props.entry.costType}
+                        </Typography>
 
                     </StyledDivLeftSide>
                     <StyledDivRightSide>
