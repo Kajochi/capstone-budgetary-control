@@ -16,4 +16,5 @@ public class EntryWithNoId {
     private final BigDecimal amount;
     private final Category category;
     private final Interval interval;
+    private final CostType costType;
 }

@@ -1,9 +1,6 @@
 package de.neuefische.capstone.backend.entries;
 
-import de.neuefische.capstone.backend.model.Category;
-import de.neuefische.capstone.backend.model.Entry;
-import de.neuefische.capstone.backend.model.EntryWithNoId;
-import de.neuefische.capstone.backend.model.Interval;
+import de.neuefische.capstone.backend.model.*;
 import org.junit.jupiter.api.Test;
 
 
@@ -32,7 +29,8 @@ class EntriesServiceTest {
                         LocalDate.of(2023, 12, 3),
                         new BigDecimal(34),
                         Category.INCOME,
-                        Interval.MONTHLY)
+                        Interval.MONTHLY,
+                        CostType.FIXED)
         );
         //When
         when(entriesRepo.findAll()).thenReturn(entries);
@@ -51,7 +49,8 @@ class EntriesServiceTest {
                 LocalDate.of(2023, 12, 3),
                 new BigDecimal(34),
                 Category.INCOME,
-                Interval.MONTHLY
+                Interval.MONTHLY,
+                CostType.FIXED
         );
 
         String mockedID = "1";
@@ -62,7 +61,8 @@ class EntriesServiceTest {
                 LocalDate.of(2023, 12, 3),
                 new BigDecimal(34),
                 Category.INCOME,
-                Interval.MONTHLY);
+                Interval.MONTHLY,
+                CostType.FIXED);
         //When
         when(entriesRepo.insert(entryExpected)).thenReturn(entryExpected);
         when(idService.createRandomId()).thenReturn(mockedID);
@@ -83,7 +83,8 @@ class EntriesServiceTest {
                 LocalDate.of(2023, 12, 3),
                 new BigDecimal(34),
                 Category.INCOME,
-                Interval.MONTHLY
+                Interval.MONTHLY,
+                CostType.FIXED
         );
 
         EntryWithNoId entryWithNoId = new EntryWithNoId(
@@ -92,7 +93,8 @@ class EntriesServiceTest {
                 LocalDate.of(2023, 12, 3),
                 new BigDecimal(34),
                 Category.INCOME,
-                Interval.MONTHLY
+                Interval.MONTHLY,
+                CostType.FIXED
         );
 
         String iD = "1";
