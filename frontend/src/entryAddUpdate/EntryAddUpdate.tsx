@@ -155,7 +155,7 @@ export default function EntryAddUpdate() {
                         <StyledToggleButton value="EXPENSE">Expense</StyledToggleButton>
                     </StyledToggleGroup>
 
-                    <StyledToggleGroup id="costType" color="primary" value={category} exclusive
+                    <StyledToggleGroup id="costType" color="primary" value={costType} exclusive
                                        onChange={handleChangeCostType}
                                        aria-label="Platform">
                         <StyledToggleButton value="FIXED">Fixed</StyledToggleButton>
