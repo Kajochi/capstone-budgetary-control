@@ -13,6 +13,7 @@ import {Category} from "../model/Category.ts";
 import {Interval} from "../model/Interval.ts";
 import {useStore} from "../hooks/useStore.ts";
 import {useNavigate} from "react-router-dom";
+import {CostType} from "../model/CostType.ts";
 
 
 export default function EntryAddUpdate() {
@@ -22,6 +23,7 @@ export default function EntryAddUpdate() {
     const [amount, setAmount] = useState<string>("")
     const [date, setDate] = useState<string>("")
     const [category, setCategory] = useState<Category>("INCOME")
+    const [costType, setCostType] = useState<CostType>("FIXED")
 
     const navigate = useNavigate()
     const getIsCardUpdated = useStore((state) => state.getIsCardUpdated)
@@ -40,6 +42,7 @@ export default function EntryAddUpdate() {
            setDate(updatedCard.date)
            setInterval(updatedCard.interval)
            setCategory(updatedCard.category)
+           setCostType(updatedCard.costType)
        }
    }, [] )
 
@@ -50,6 +53,7 @@ export default function EntryAddUpdate() {
         setDate("")
         setInterval("ONCE")
         setCategory("INCOME")
+        setCostType("FIXED")
     }
 
     function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -65,7 +69,8 @@ export default function EntryAddUpdate() {
             amount: amount.replace(/,/, "."),
             date: date,
             interval: interval,
-            category: category
+            category: category,
+            costType: costType
         }
         createEntry(requestBody)
         navigate("/")
@@ -82,7 +87,8 @@ export default function EntryAddUpdate() {
             amount: amount,
             date: date,
             interval: interval,
-            category: category
+            category: category,
+            costType: costType
         }
         updateEntry(requestBody, getUpdatedCard()?.id as string)
         navigate("/")
@@ -98,11 +104,16 @@ export default function EntryAddUpdate() {
     function handleChangeCategory(_: React.MouseEvent<HTMLElement>, newCategory: Category) {
         setCategory(newCategory)
     }
+
+    function handleChangeCostType(_: React.MouseEvent<HTMLElement>, newCostType: CostType) {
+        setCostType(newCostType)
+    }
     function handleCancel() {
         navigate("/")
         resetAllUseStates()
         setIsCardUpdated(false)
     }
+
 
 
     return (
@@ -142,6 +153,13 @@ export default function EntryAddUpdate() {
                                        aria-label="Platform">
                         <StyledToggleButton value="INCOME">Income</StyledToggleButton>
                         <StyledToggleButton value="EXPENSE">Expense</StyledToggleButton>
+                    </StyledToggleGroup>
+
+                    <StyledToggleGroup id="costType" color="primary" value={category} exclusive
+                                       onChange={handleChangeCostType}
+                                       aria-label="Platform">
+                        <StyledToggleButton value="FIXED">Fixed</StyledToggleButton>
+                        <StyledToggleButton value="VARIABLE">Variable</StyledToggleButton>
                     </StyledToggleGroup>
                 </StyledDiv>
                 <StyleDivButtons>
