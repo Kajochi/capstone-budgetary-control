@@ -1,10 +1,7 @@
 package de.neuefische.capstone.backend.entries;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import de.neuefische.capstone.backend.model.Category;
-import de.neuefische.capstone.backend.model.Entry;
-import de.neuefische.capstone.backend.model.EntryWithNoId;
-import de.neuefische.capstone.backend.model.Interval;
+import de.neuefische.capstone.backend.model.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -54,7 +51,8 @@ class EntriesIntegrationTest {
                 LocalDate.of(2023, 12, 3),
                 new BigDecimal(34),
                 Category.INCOME,
-                Interval.MONTHLY
+                Interval.MONTHLY,
+                CostType.FIXED
         ));
         //When
         mockMvc.perform(
@@ -70,6 +68,7 @@ class EntriesIntegrationTest {
                 .andExpect(jsonPath("amount").value("34"))
                 .andExpect(jsonPath("category").value("INCOME"))
                 .andExpect(jsonPath("interval").value("MONTHLY"))
+                .andExpect(jsonPath("costType").value("FIXED"))
                 .andExpect(status().isOk());
     }
 
@@ -83,7 +82,8 @@ class EntriesIntegrationTest {
                 LocalDate.of(2023, 12, 3),
                 new BigDecimal(34),
                 Category.INCOME,
-                Interval.MONTHLY
+                Interval.MONTHLY,
+                CostType.FIXED
         ));
         String id = "1";
         //When
@@ -100,6 +100,7 @@ class EntriesIntegrationTest {
                 .andExpect(jsonPath("amount").value("34"))
                 .andExpect(jsonPath("category").value("INCOME"))
                 .andExpect(jsonPath("interval").value("MONTHLY"))
+                .andExpect(jsonPath("costType").value("FIXED"))
                 .andExpect(status().isOk());
     }
 
@@ -113,7 +114,8 @@ class EntriesIntegrationTest {
                 LocalDate.of(2023, 12, 3),
                 new BigDecimal(34),
                 Category.INCOME,
-                Interval.MONTHLY
+                Interval.MONTHLY,
+                CostType.FIXED
         ));
 
         String responseString = mockMvc.perform(

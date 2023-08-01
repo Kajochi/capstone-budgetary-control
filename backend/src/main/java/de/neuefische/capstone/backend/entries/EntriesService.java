@@ -29,7 +29,8 @@ public class EntriesService {
                 entryWithNoId.getDate(),
                 entryWithNoId.getAmount(),
                 entryWithNoId.getCategory(),
-                entryWithNoId.getInterval()
+                entryWithNoId.getInterval(),
+                entryWithNoId.getCostType()
         ));
     }
 
@@ -41,7 +42,8 @@ public class EntriesService {
                 entryWithNoId.getDate(),
                 entryWithNoId.getAmount(),
                 entryWithNoId.getCategory(),
-                entryWithNoId.getInterval()
+                entryWithNoId.getInterval(),
+                entryWithNoId.getCostType()
         );
 
         return entriesRepo.save(updatedEntry);

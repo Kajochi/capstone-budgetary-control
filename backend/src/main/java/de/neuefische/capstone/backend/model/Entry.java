@@ -26,4 +26,6 @@ public class Entry {
     private final Category category;
 
     private final Interval interval;
+
+    private final CostType costType;
 }
