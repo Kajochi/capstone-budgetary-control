@@ -18,12 +18,11 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class SortEntries {
 
-    List<MonthlyEntries> sortedEntriesByMonth;
 
     EntriesRepo entriesRepo;
 
 
-    public List<MonthlyEntries> sortedEntriesByMonth(){
+    public List<MonthlyEntries> sortEntriesByMonthAndYear(){
 
         List<Entry> filteredEntries = new ArrayList<>();
         entriesRepo.findAll().stream().filter(entry -> !entry.getInterval().equals(Interval.ONCE)).forEach(filteredEntries::add);
