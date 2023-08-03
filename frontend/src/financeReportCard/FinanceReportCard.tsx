@@ -23,33 +23,43 @@ export default function FinanceReportCard(props: Props){
     } else {
         financeReport = props.financeReports[3]
     }
+
+    if (financeReport === undefined) {
+        return <div>loading...</div>
+    }
     return (
         <div>
             <StyledCard>
                 <StyledCardContent>
+                    <StyledTypography >
+                         {financeReport.period}
+                    </StyledTypography>
                     <Typography>
-                        {financeReport.period}
+                       Totalincome:  {financeReport.totalIncome}
                     </Typography>
                     <Typography>
-                        {financeReport.totalIncome}
+                       Totalexpense:  {financeReport.totalExpenses}
                     </Typography>
                     <Typography>
-                        {financeReport.totalExpense}
+                       Fixcosts:  {financeReport.fixCosts}
                     </Typography>
                     <Typography>
-                        {financeReport.fixCosts}
+                       Variablecosts:  {financeReport.variableCosts}
                     </Typography>
                     <Typography>
-                        {financeReport.variableCosts}
-                    </Typography>
-                    <Typography>
-                        {financeReport.balance}
+                       Balance:  {financeReport.balance}
                     </Typography>
                 </StyledCardContent>
             </StyledCard>
         </div>
     )
 }
+
+const StyledTypography = styled(Typography)`
+    display: flex;
+    justify-content: center;
+  
+    ;`
 
 const StyledCard = styled(Card)`
     min-width: 275px;
@@ -59,5 +69,5 @@ const StyledCard = styled(Card)`
     ;`
 const StyledCardContent = styled(CardContent)`
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     ;`

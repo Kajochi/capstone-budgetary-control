@@ -4,7 +4,7 @@ export type FinanceReport = {
 
     period: Period,
     totalIncome: string,
-    totalExpense: string,
+    totalExpenses: string,
     fixCosts: string,
     variableCosts: string,
     balance: string,

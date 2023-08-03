@@ -28,7 +28,7 @@ export default function FinanceReport() {
             <StyledH2>Finance Report</StyledH2>
             <FormControl >
                 <InputLabel id="period">Period</InputLabel>
-                <Select labelId="intervall" autoWidth={true}
+                <Select labelId="intervall"
                         value={period}
                         onChange={(e) => setPeriod(e.target.value as Period)}
                 >
@@ -38,7 +38,7 @@ export default function FinanceReport() {
                     <MenuItem value="YEAR">Year</MenuItem>
                 </Select>
             </FormControl>
-           <FinanceReportCard period={period} financeReports={financeReports}/>
+            <FinanceReportCard period={period} financeReports={financeReports}/>
         </div>
     )
 }
