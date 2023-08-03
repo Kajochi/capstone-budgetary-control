@@ -140,7 +140,6 @@ export default function EntryAddUpdate() {
                                 onChange={(e) => setInterval(e.target.value as Interval)}
                         >
                             <MenuItem value="ONCE">Once</MenuItem>
-                            <MenuItem value="WEEKLY">Weekly</MenuItem>
                             <MenuItem value="MONTHLY">Monthly</MenuItem>
                             <MenuItem value="QUARTERLY">Quarterly</MenuItem>
                             <MenuItem value="HALF_YEARLY">Half Yearly</MenuItem>
