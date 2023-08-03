@@ -1,1 +1,1 @@
-export type Period = "MONTH" | "QUARTER" | "HALF_YEAR" | "YEAR"
+export type Period = "MONTH" | "QUARTER" | "HALF_YEAR" | "YEAR";

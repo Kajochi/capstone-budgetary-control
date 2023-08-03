@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/finance-report")
+@RequestMapping("/api/financeReports")
 public class FinanceReportController {
 
     private final FinanceReportSerivce financeReportSerivce;

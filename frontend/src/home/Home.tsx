@@ -3,6 +3,7 @@ import styled from "@emotion/styled";
 import AddIcon from "@mui/icons-material/Add";
 import {Link} from "react-router-dom";
 import {IconButton} from "@mui/material";
+import FinanceReport from "../financeReport/FinanceReport.tsx";
 
 export default function Home() {
     return (
@@ -12,6 +13,7 @@ export default function Home() {
                 <StyledIconButton size={"small"}><AddIcon/></StyledIconButton>
             </Link>
             <EntriesList/>
+            <FinanceReport/>
 
         </div>
     )
