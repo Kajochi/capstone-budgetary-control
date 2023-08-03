@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 public class SortEntries {
 
 
-    EntriesRepo entriesRepo;
+    private final EntriesRepo entriesRepo;
 
 
     public List<MonthlyEntries> sortEntriesByMonthAndYear(){
@@ -40,8 +40,6 @@ public class SortEntries {
         return monthlyEntries;
 
     }
-
-
 
 
 
