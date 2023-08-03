@@ -5,6 +5,7 @@ import de.neuefische.capstone.backend.model.*;
 import de.neuefische.capstone.backend.sortentries.SortEntries;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -14,11 +15,10 @@ import static de.neuefische.capstone.backend.model.Interval.getMultiplier;
 
 @Data
 @AllArgsConstructor
+@Component
 public class FinanceReportCalculate {
 
     private final EntriesRepo entriesRepo;
-
-    private final SortEntries sortEntries;
 
 
     public List<FinanceReport> calculateFinanceReports() {
@@ -76,12 +76,10 @@ public class FinanceReportCalculate {
         }
 
 
-            totalIncome = fixIncome.add(variableIncome.divide(BigDecimal.valueOf(numMonthsConsidered)));
-            totalExpenses = fixExpenses.add(variableExpenses.divide(BigDecimal.valueOf(numMonthsConsidered)));
-            totalVariableCosts = variableCosts.divide(BigDecimal.valueOf(numMonthsConsidered));
-            balance = totalIncome.subtract(totalExpenses);
-
-
+        totalIncome = fixIncome.add(variableIncome.divide(BigDecimal.valueOf(numMonthsConsidered), 2, BigDecimal.ROUND_HALF_DOWN));
+        totalExpenses = fixExpenses.add(variableExpenses.divide(BigDecimal.valueOf(numMonthsConsidered), 2, BigDecimal.ROUND_HALF_DOWN));
+        totalVariableCosts = variableCosts.divide(BigDecimal.valueOf(numMonthsConsidered), 2, BigDecimal.ROUND_HALF_DOWN);
+        balance = totalIncome.subtract(totalExpenses);
 
 
         return new FinanceReport(Period.MONTH, totalIncome, totalExpenses, fixCosts, totalVariableCosts, balance);
@@ -92,7 +90,7 @@ public class FinanceReportCalculate {
         int entryMultiplier = getMultiplier(entryInterval);
         int reportMultiplier = getMultiplier(reportPeriod);
 
-        return BigDecimal.valueOf(reportMultiplier).divide(BigDecimal.valueOf(entryMultiplier));
+        return BigDecimal.valueOf(reportMultiplier).divide(BigDecimal.valueOf(entryMultiplier), 8, BigDecimal.ROUND_HALF_DOWN);
 
     }
 
