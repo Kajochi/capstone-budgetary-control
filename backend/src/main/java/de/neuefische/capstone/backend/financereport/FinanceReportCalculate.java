@@ -2,7 +2,6 @@ package de.neuefische.capstone.backend.financereport;
 
 import de.neuefische.capstone.backend.entries.EntriesRepo;
 import de.neuefische.capstone.backend.model.*;
-import de.neuefische.capstone.backend.sortentries.SortEntries;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.stereotype.Component;
@@ -82,7 +81,7 @@ public class FinanceReportCalculate {
         balance = totalIncome.subtract(totalExpenses);
 
 
-        return new FinanceReport(Period.MONTH, totalIncome, totalExpenses, fixCosts, totalVariableCosts, balance);
+        return new FinanceReport(period, totalIncome, totalExpenses, fixCosts, totalVariableCosts, balance);
 
     }
 

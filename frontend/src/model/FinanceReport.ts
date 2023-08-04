@@ -1,8 +1,9 @@
-import {Period} from "./Period.ts";
+
+import {Interval} from "./Interval.ts";
 
 export type FinanceReport = {
 
-    period: Period,
+    period: Interval,
     totalIncome: string,
     totalExpenses: string,
     fixCosts: string,

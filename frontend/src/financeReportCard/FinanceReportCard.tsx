@@ -1,12 +1,13 @@
-import {Period} from "../model/Period.ts";
+
 import {FinanceReport} from "../model/FinanceReport.ts";
 import Card from "@mui/material/Card";
 import styled from "@emotion/styled";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
+import {Interval} from "../model/Interval.ts";
 
 type Props = {
-    period: Period,
+    period: Interval,
     financeReports: FinanceReport[]
 }
 
@@ -14,11 +15,11 @@ export default function FinanceReportCard(props: Props){
 
     let financeReport: FinanceReport
 
-    if (props.period === 'MONTH') {
+    if (props.period === 'MONTHLY') {
         financeReport = props.financeReports[0]
-    } else if (props.period === 'QUARTER') {
+    } else if (props.period === 'QUARTERLY') {
         financeReport = props.financeReports[1]
-    } else if (props.period === 'HALF_YEAR') {
+    } else if (props.period === 'HALF_YEARLY') {
         financeReport = props.financeReports[2]
     } else {
         financeReport = props.financeReports[3]

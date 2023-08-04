@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 public class FinanceReport {
 
-    private final Period period;
+    private final Interval period;
     private final BigDecimal totalIncome;
     private final BigDecimal totalExpenses;
     private final BigDecimal fixCosts;

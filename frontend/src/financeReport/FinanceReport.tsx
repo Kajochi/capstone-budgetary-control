@@ -2,15 +2,16 @@ import styled from "@emotion/styled";
 import {FormControl, InputLabel, MenuItem, Select} from "@mui/material";
 
 import {useEffect, useState} from "react";
-import {Period} from "../model/Period.ts";
+
 import {useStore} from "../hooks/useStore.ts";
 import FinanceReportCard from "../financeReportCard/FinanceReportCard.tsx";
+import {Interval} from "../model/Interval.ts";
 
 
 
 export default function FinanceReport() {
 
-    const [period, setPeriod] = useState<Period>('MONTH');
+    const [period, setPeriod] = useState<Interval>('MONTHLY');
 
    const financeReports = useStore((state) => state.financeReports)
 
@@ -30,12 +31,12 @@ export default function FinanceReport() {
                 <InputLabel id="period">Period</InputLabel>
                 <Select labelId="intervall"
                         value={period}
-                        onChange={(e) => setPeriod(e.target.value as Period)}
+                        onChange={(e) => setPeriod(e.target.value as Interval)}
                 >
-                    <MenuItem value="MONTH">Month</MenuItem>
-                    <MenuItem value="QUARTER">Quarter</MenuItem>
-                    <MenuItem value="HALF_YEAR">Half Year</MenuItem>
-                    <MenuItem value="YEAR">Year</MenuItem>
+                    <MenuItem value="MONTHLY">Monthly</MenuItem>
+                    <MenuItem value="QUARTERLY">Quarterly</MenuItem>
+                    <MenuItem value="HALF_YEARLY">Half Yearly</MenuItem>
+                    <MenuItem value="YEARLY">Yearly</MenuItem>
                 </Select>
             </FormControl>
             <FinanceReportCard period={period} financeReports={financeReports}/>

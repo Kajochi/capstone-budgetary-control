@@ -16,7 +16,6 @@ public enum Interval {
             case HALF_YEARLY -> 6;
             case YEARLY -> 12;
             case ONCE -> 1;
-            default -> throw new IllegalArgumentException("Unknown interval: " + interval);
         };
 
     }
