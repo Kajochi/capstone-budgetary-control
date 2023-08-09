@@ -16,4 +16,14 @@ class IntervalTest {
         assertEquals(1, actual);
     }
 
+    @Test
+    void getMultiplierShouldReturn0ForOnce() {
+        //GIVEN
+        Interval interval = Interval.ONCE;
+        //WHEN
+        int actual = Interval.getMultiplier(interval);
+        //THEN
+        assertEquals(0, actual);
+    }
+
 }

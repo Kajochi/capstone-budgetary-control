@@ -50,6 +50,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
                 Interval.MONTHLY,
                 CostType.FIXED
         ));
+        String jsonRequestBodyThirdEntry = objectMapper.writeValueAsString(new EntryWithNoId(
+                "testTitle",
+                "testDescription",
+                LocalDate.of(2023, 12, 3),
+                new BigDecimal(200),
+                Category.EXPENSE,
+                Interval.MONTHLY,
+                CostType.VARIABLE
+        ));
         //When
         mockMvc.perform(
                         MockMvcRequestBuilders.post("/api/entries")
@@ -63,6 +72,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
                                 .content(jsonRequestBodySecondEntry)
                 )
                                 .andExpect(status().isOk());
+        mockMvc.perform(
+                        MockMvcRequestBuilders.post("/api/entries")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(jsonRequestBodyThirdEntry)
+                )
+                .andExpect(status().isOk());
 
         String responseString = mockMvc.perform(
                         MockMvcRequestBuilders.get("/api/financeReports")
@@ -81,35 +96,34 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
                      new FinanceReport(
                              Interval.MONTHLY,
                              new BigDecimal("1000.000"),
+                             new BigDecimal("700.000"),
                              new BigDecimal("500.000"),
-                             new BigDecimal("500.000"),
-                             new BigDecimal(0),
-                             new BigDecimal("500.000")
+                             new BigDecimal("200.000"),
+                             new BigDecimal("300.000")
                      ),
                      new FinanceReport(
                              Interval.QUARTERLY,
                              new BigDecimal("3000.000"),
+                             new BigDecimal("2100.000"),
                              new BigDecimal("1500.000"),
-                             new BigDecimal("1500.000"),
-                             new BigDecimal(0),
-                             new BigDecimal("1500.000")
+                             new BigDecimal("600.000"),
+                             new BigDecimal("900.000")
                      ),
                      new FinanceReport(
                              Interval.HALF_YEARLY,
                              new BigDecimal("6000.000"),
+                             new BigDecimal("4200.000"),
                              new BigDecimal("3000.000"),
-                             new BigDecimal("3000.000"),
-                             new BigDecimal(0),
-                             new BigDecimal("3000.000")
+                             new BigDecimal("1200.000"),
+                             new BigDecimal("1800.000")
                      ),
                      new FinanceReport(
                              Interval.YEARLY,
                              new BigDecimal("12000.000"),
+                             new BigDecimal("8400.000"),
                              new BigDecimal("6000.000"),
-                             new BigDecimal("6000.000"),
-                             new BigDecimal(0),
-                             new BigDecimal("6000.000"
-                     )
+                             new BigDecimal("2400.000"),
+                             new BigDecimal("3600.000")
              ));
              assertEquals(expected, actual);
     }

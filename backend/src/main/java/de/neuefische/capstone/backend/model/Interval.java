@@ -15,7 +15,7 @@ public enum Interval {
             case QUARTERLY -> 3;
             case HALF_YEARLY -> 6;
             case YEARLY -> 12;
-            case ONCE -> 1;
+            case ONCE -> 0;
         };
 
     }

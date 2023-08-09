@@ -23,34 +23,34 @@ class FinanceReportServiceTest {
                 new FinanceReport(
                         Interval.MONTHLY,
                         new BigDecimal("1000.000"),
+                        new BigDecimal("700.000"),
                         new BigDecimal("500.000"),
-                        new BigDecimal("500.000"),
-                        new BigDecimal(0),
-                        new BigDecimal("500.000")
+                        new BigDecimal("200.000"),
+                        new BigDecimal("300.000")
                 ),
                 new FinanceReport(
                         Interval.QUARTERLY,
                         new BigDecimal("1000.000"),
+                        new BigDecimal("700.000"),
                         new BigDecimal("500.000"),
-                        new BigDecimal("500.000"),
-                        new BigDecimal(0),
-                        new BigDecimal("500.000")
+                        new BigDecimal("200.000"),
+                        new BigDecimal("300.000")
                 ),
                 new FinanceReport(
                         Interval.HALF_YEARLY,
                         new BigDecimal("1000.000"),
+                        new BigDecimal("700.000"),
                         new BigDecimal("500.000"),
-                        new BigDecimal("500.000"),
-                        new BigDecimal(0),
-                        new BigDecimal("500.000")
+                        new BigDecimal("200.000"),
+                        new BigDecimal("300.000")
                 ),
                 new FinanceReport(
                         Interval.YEARLY,
                         new BigDecimal("1000.000"),
+                        new BigDecimal("700.000"),
                         new BigDecimal("500.000"),
-                        new BigDecimal("500.000"),
-                        new BigDecimal(0),
-                        new BigDecimal("500.000")
+                        new BigDecimal("200.000"),
+                        new BigDecimal("300.000")
                 )
         );
         //WHEN
@@ -59,34 +59,34 @@ class FinanceReportServiceTest {
                 new FinanceReport(
                         Interval.MONTHLY,
                         new BigDecimal("1000.000"),
+                        new BigDecimal("700.000"),
                         new BigDecimal("500.000"),
-                        new BigDecimal("500.000"),
-                        new BigDecimal(0),
-                        new BigDecimal("500.000")
+                        new BigDecimal("200.000"),
+                        new BigDecimal("300.000")
                 ),
                 new FinanceReport(
                         Interval.QUARTERLY,
                         new BigDecimal("1000.000"),
+                        new BigDecimal("700.000"),
                         new BigDecimal("500.000"),
-                        new BigDecimal("500.000"),
-                        new BigDecimal(0),
-                        new BigDecimal("500.000")
+                        new BigDecimal("200.000"),
+                        new BigDecimal("300.000")
                 ),
                 new FinanceReport(
                         Interval.HALF_YEARLY,
                         new BigDecimal("1000.000"),
+                        new BigDecimal("700.000"),
                         new BigDecimal("500.000"),
-                        new BigDecimal("500.000"),
-                        new BigDecimal(0),
-                        new BigDecimal("500.000")
+                        new BigDecimal("200.000"),
+                        new BigDecimal("300.000")
                 ),
                 new FinanceReport(
                         Interval.YEARLY,
                         new BigDecimal("1000.000"),
+                        new BigDecimal("700.000"),
                         new BigDecimal("500.000"),
-                        new BigDecimal("500.000"),
-                        new BigDecimal(0),
-                        new BigDecimal("500.000")
+                        new BigDecimal("200.000"),
+                        new BigDecimal("300.000")
                 )
         );
         List<FinanceReport> actual = financeReportService.getFinanceReports();

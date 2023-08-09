@@ -42,17 +42,25 @@ class FinanceReportCalculateTest {
                         new BigDecimal(500),
                         Category.EXPENSE,
                         Interval.MONTHLY,
-                        CostType.FIXED)
+                        CostType.FIXED),
+                new Entry("3",
+                        "testTitle",
+                        "testDescription",
+                        LocalDate.of(2023, 12, 3),
+                        new BigDecimal(200),
+                        Category.EXPENSE,
+                        Interval.MONTHLY,
+                        CostType.VARIABLE)
         );
         //When
         when(entriesRepo.findAll()).thenReturn(filteredEntries);
         FinanceReport expected = new FinanceReport(
                 Interval.MONTHLY,
                 new BigDecimal("1000.000"),
+                new BigDecimal("700.000"),
                 new BigDecimal("500.000"),
-                new BigDecimal("500.000"),
-                new BigDecimal(0),
-                new BigDecimal("500.000")
+                new BigDecimal("200.000"),
+                new BigDecimal("300.000")
         );
         FinanceReport actual = financeReportCalculate.calculateFinanceReports().get(0);
         //Then
