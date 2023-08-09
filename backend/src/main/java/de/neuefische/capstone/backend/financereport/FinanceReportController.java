@@ -11,13 +11,13 @@ import java.util.List;
 @RequestMapping("/api/financeReports")
 public class FinanceReportController {
 
-    private final FinanceReportSerivce financeReportSerivce;
+    private final FinanceReportService financeReportService;
 
-    FinanceReportController(FinanceReportSerivce financeReportSerivce) {
-        this.financeReportSerivce = financeReportSerivce;
+    FinanceReportController(FinanceReportService financeReportService) {
+        this.financeReportService = financeReportService;
     }
     @GetMapping
     List<FinanceReport> getFinanceReports() {
-        return financeReportSerivce.getFinanceReports();
+        return financeReportService.getFinanceReports();
     }
 }

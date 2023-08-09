@@ -10,7 +10,7 @@ import java.util.List;
 @Service
 @Data
 @AllArgsConstructor
-public class FinanceReportSerivce {
+public class FinanceReportService {
 
     private final FinanceReportCalculate financeReportCalculate;
 
