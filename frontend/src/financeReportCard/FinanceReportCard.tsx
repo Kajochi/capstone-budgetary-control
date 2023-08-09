@@ -36,19 +36,19 @@ export default function FinanceReportCard(props: Props){
                          {financeReport.period}
                     </StyledTypography>
                     <Typography>
-                       Totalincome:  {financeReport.totalIncome}
+                       Totalincome:  {financeReport.totalIncome}€
                     </Typography>
                     <Typography>
-                       Totalexpense:  {financeReport.totalExpenses}
+                       Totalexpense:  {financeReport.totalExpenses}€
                     </Typography>
                     <Typography>
-                       Fixcosts:  {financeReport.fixCosts}
+                       Fixcosts:  {financeReport.fixCosts}€
                     </Typography>
                     <Typography>
-                       Variablecosts:  {financeReport.variableCosts}
+                       Variablecosts:  {financeReport.variableCosts}€
                     </Typography>
                     <Typography>
-                       Balance:  {financeReport.balance}
+                       Balance:  {financeReport.balance}€
                     </Typography>
                 </StyledCardContent>
             </StyledCard>

@@ -7,6 +7,7 @@ import lombok.Data;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,11 +46,8 @@ public class FinanceReportCalculate {
         BigDecimal variableExpenses = BigDecimal.ZERO;
         BigDecimal totalExpenses;
         BigDecimal fixCosts = BigDecimal.ZERO;
-        BigDecimal variableCosts = BigDecimal.ZERO;
-        BigDecimal totalVariableCosts;
+        BigDecimal totalVariableCosts = BigDecimal.ZERO;
         BigDecimal balance;
-
-        int numMonthsConsidered = 1;
 
 
         for (Entry entry : filteredEntries) {
@@ -67,17 +65,16 @@ public class FinanceReportCalculate {
                 if (entry.getCategory().equals(Category.INCOME)) {
                     variableIncome = variableIncome.add(entry.getAmount().multiply(intervalNum));
                 } else {
-                    variableCosts = variableCosts.add(entry.getAmount().multiply(intervalNum));
-                    variableExpenses = variableCosts;
+                    totalVariableCosts = totalVariableCosts.add(entry.getAmount().multiply(intervalNum));
+                    variableExpenses = totalVariableCosts;
                 }
-                numMonthsConsidered++;
+
             }
         }
 
 
-        totalIncome = fixIncome.add(variableIncome.divide(BigDecimal.valueOf(numMonthsConsidered), 2, BigDecimal.ROUND_HALF_DOWN));
-        totalExpenses = fixExpenses.add(variableExpenses.divide(BigDecimal.valueOf(numMonthsConsidered), 2, BigDecimal.ROUND_HALF_DOWN));
-        totalVariableCosts = variableCosts.divide(BigDecimal.valueOf(numMonthsConsidered), 2, BigDecimal.ROUND_HALF_DOWN);
+        totalIncome = fixIncome.add(variableIncome);
+        totalExpenses = fixExpenses.add(variableExpenses);
         balance = totalIncome.subtract(totalExpenses);
 
 
@@ -89,7 +86,7 @@ public class FinanceReportCalculate {
         int entryMultiplier = getMultiplier(entryInterval);
         int reportMultiplier = getMultiplier(reportPeriod);
 
-        return BigDecimal.valueOf(reportMultiplier).divide(BigDecimal.valueOf(entryMultiplier), 8, BigDecimal.ROUND_HALF_DOWN);
+        return BigDecimal.valueOf(reportMultiplier).divide(BigDecimal.valueOf(entryMultiplier), 3, RoundingMode.HALF_DOWN);
 
     }
 

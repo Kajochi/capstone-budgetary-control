@@ -47,22 +47,26 @@ export const useStore = create<State>((set, get) => ({
 
     createEntry: (requestBody: EntryWithNoId) => {
         const getEntries = get().getEntries
+        const getFinanceReports = get().getFinanceReports
         axios.post("/api/entries", requestBody)
             .catch(error)
             .then(() => {
                 getEntries();
+                getFinanceReports()
             })
 
     },
 
     updateEntry: (requestBody: EntryWithNoId, id: string) => {
         const getEntries = get().getEntries
+        const getFinanceReports = get().getFinanceReports
         axios.put(
             "/api/entries/" + id,
             requestBody
         ).catch(error)
             .finally(()=> {
                 getEntries();
+                getFinanceReports();
                 set({isCardUpdated: false})
             })
 
@@ -70,10 +74,12 @@ export const useStore = create<State>((set, get) => ({
 
     deleteEntry: (id: string) => {
         const getEntries = get().getEntries
+        const getFinanceReports = get().getFinanceReports
         axios.delete("/api/entries/" + id)
             .catch(error)
             .then(() => {
                 getEntries();
+                getFinanceReports();
                 set({isCardUpdated: false})
             })
     },
