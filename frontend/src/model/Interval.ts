@@ -1,1 +1,1 @@
-export type Interval = "ONCE" | "WEEKLY" | "MONTHLY" | "QUARTERLY" | "HALF_YEARLY" | "YEARLY";
+export type Interval = "ONCE"  | "MONTHLY" | "QUARTERLY" | "HALF_YEARLY" | "YEARLY";

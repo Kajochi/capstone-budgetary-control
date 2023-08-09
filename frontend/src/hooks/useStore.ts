@@ -4,10 +4,13 @@ import {Entry} from "../model/Entry.ts";
 import {EntryWithNoId} from "../model/EntryWithNoId.ts";
 import {Simulate} from "react-dom/test-utils";
 import error = Simulate.error;
+import {FinanceReport} from "../model/FinanceReport.ts";
 
 type State = {
     entries: Entry[];
+    financeReports: FinanceReport[];
     getEntries: () => void;
+    getFinanceReports: () => void;
     createEntry: (requestBody: EntryWithNoId) => void;
     updateEntry: (requestBody: EntryWithNoId, id: string) => void;
     deleteEntry: (id: string) => void;
@@ -22,6 +25,7 @@ type State = {
 
 export const useStore = create<State>((set, get) => ({
     entries: [],
+    financeReports: [],
     isCardUpdated: false,
     updatedCardId: "",
 
@@ -33,24 +37,36 @@ export const useStore = create<State>((set, get) => ({
             }).catch(error)
     },
 
+    getFinanceReports: () => {
+        axios.get("/api/financeReports")
+            .then((response) => {
+                set({financeReports: response.data});
+            }).catch(error)
+
+    },
+
     createEntry: (requestBody: EntryWithNoId) => {
         const getEntries = get().getEntries
+        const getFinanceReports = get().getFinanceReports
         axios.post("/api/entries", requestBody)
             .catch(error)
             .then(() => {
                 getEntries();
+                getFinanceReports()
             })
 
     },
 
     updateEntry: (requestBody: EntryWithNoId, id: string) => {
         const getEntries = get().getEntries
+        const getFinanceReports = get().getFinanceReports
         axios.put(
             "/api/entries/" + id,
             requestBody
         ).catch(error)
             .finally(()=> {
                 getEntries();
+                getFinanceReports();
                 set({isCardUpdated: false})
             })
 
@@ -58,10 +74,12 @@ export const useStore = create<State>((set, get) => ({
 
     deleteEntry: (id: string) => {
         const getEntries = get().getEntries
+        const getFinanceReports = get().getFinanceReports
         axios.delete("/api/entries/" + id)
             .catch(error)
             .then(() => {
                 getEntries();
+                getFinanceReports();
                 set({isCardUpdated: false})
             })
     },
