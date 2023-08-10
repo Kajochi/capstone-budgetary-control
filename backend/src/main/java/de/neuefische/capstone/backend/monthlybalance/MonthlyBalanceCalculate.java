@@ -47,7 +47,7 @@ public class MonthlyBalanceCalculate {
         }
 
 
-        totalExpenses = fixedCosts.add(variableCosts).add(oneTimeCosts);
+        totalExpenses = fixedCosts.add(variableCosts);
         BigDecimal balance = totalIncome.subtract(totalExpenses);
 
         return List.of(totalIncome, totalExpenses, fixedCosts, variableCosts, oneTimeCosts, balance);
