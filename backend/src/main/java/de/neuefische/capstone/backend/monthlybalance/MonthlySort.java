@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -23,7 +24,7 @@ public class MonthlySort {
 
     private List<LocalDate> generateEarliestAndLatestMonthForMonthlyBalance() {
         LocalDate currentDate = LocalDate.now();
-        LocalDate endDate = currentDate.plusMonths(12);
+        LocalDate endDate = currentDate.plusMonths(13);
 
         Entry earliestEntry = entriesRepo.findFirstByOrderByDateAsc();
         LocalDate earliestTransactionDate = earliestEntry.getDate();
@@ -62,7 +63,11 @@ public class MonthlySort {
 
     private List<Entry> sortEntriesByStartDate(LocalDate targetDate) {
         List<Entry> monthlyEntries = entriesRepo.findAll().stream()
-                .filter(entry -> entry.getInterval() == Interval.MONTHLY).toList();
+                .filter(entry -> entry.getInterval() == Interval.MONTHLY)
+                .filter(entry -> entry.getDate().isBefore(targetDate)
+                    || entry.getDate().getMonth() == targetDate.getMonth()
+                    && entry.getDate().getYear() == targetDate.getYear())
+                .toList();
 
         List<Entry> onceEntries = entriesRepo.findAll().stream()
                 .filter(entry -> entry.getInterval() == Interval.ONCE)
@@ -74,10 +79,13 @@ public class MonthlySort {
                 .filter(entry -> entry.getInterval() == Interval.QUARTERLY
                         || entry.getInterval() == Interval.HALF_YEARLY
                         || entry.getInterval() == Interval.YEARLY)
+                .filter(entry -> entry.getDate().isBefore(targetDate)
+                        || entry.getDate().getMonth() == targetDate.getMonth()
+                        && entry.getDate().getYear() == targetDate.getYear())
                 .filter(entry -> {
                     int multiplier = Interval.getMultiplier(entry.getInterval());
-                    int monthsBetween = Math.floorMod(targetDate.getMonthValue() - 1, multiplier);
-                    return monthsBetween == 0;
+                    int monthsSinceStart = Period.between(entry.getDate(), targetDate).getMonths();
+                    return monthsSinceStart % multiplier == 0;
                 })
                 .toList();
 
@@ -89,4 +97,6 @@ public class MonthlySort {
         return sortedEntries;
 
     }
+
+
 }
