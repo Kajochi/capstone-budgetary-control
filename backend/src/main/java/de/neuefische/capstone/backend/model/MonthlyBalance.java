@@ -8,7 +8,7 @@ import java.util.List;
 @Data
 public class MonthlyBalance {
 
-    private final String month;
+    private final String monthYear;
     private final BigDecimal totalIncome;
     private final BigDecimal totalExpenses;
     private final BigDecimal fixedCosts;
