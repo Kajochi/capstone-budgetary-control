@@ -8,5 +8,5 @@ export type MonthlyBalance = {
     variableCosts: string;
     onetimeCosts: string;
     balance: string;
-    entries: Entry [];
+    monthlyEntries: Entry [];
 }

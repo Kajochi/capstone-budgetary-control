@@ -6,7 +6,7 @@ import EntriesList from "../entriesList/EntriesList.tsx";
 
 export default function MonthlyBalance() {
     const [year, setYear] = useState<string>("2021")
-    const [month, setMonth] = useState<string>("January")
+    const [month, setMonth] = useState<string>("JANUARY")
     const [monthYear, setMonthYear] = useState<string>("")
 
     useEffect(() => {
