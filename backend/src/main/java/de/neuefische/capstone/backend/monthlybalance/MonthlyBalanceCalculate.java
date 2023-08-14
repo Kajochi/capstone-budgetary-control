@@ -41,7 +41,7 @@ public class MonthlyBalanceCalculate {
                 }
             }
 
-            if (entry.getInterval().equals(Interval.ONCE)){
+            if (entry.getInterval().equals(Interval.ONCE) && entry.getCategory().equals(Category.EXPENSE)) {
                 oneTimeCosts = oneTimeCosts.add(entry.getAmount());
             }
         }

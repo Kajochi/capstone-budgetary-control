@@ -4,15 +4,24 @@ import {useEffect, useState} from "react";
 import EntriesList from "../entriesList/EntriesList.tsx";
 
 
-export default function MonthlyBalance() {
+type Props = {
+    monthYear: string;
+}
+
+export default function MonthlyBalance(props: Props) {
     const [year, setYear] = useState<string>("2021")
     const [month, setMonth] = useState<string>("JANUARY")
-    const [monthYear, setMonthYear] = useState<string>("")
+    const [monthYear, setMonthYear] = useState<string>("JANUARY-2021")
+
+
 
     useEffect(() => {
-        setMonthYear(month + "-" + year);
-    }, [month, year]);
-
+        if (props.monthYear) {
+            setMonth(props.monthYear.split("-")[0])
+            setYear(props.monthYear.split("-")[1])
+        }
+        setMonthYear(month + "-" + year)
+    }, [year, month])
 
     return (
         <div>
@@ -22,8 +31,9 @@ export default function MonthlyBalance() {
             <FormControl >
                 <InputLabel id="year">Choose a Year</InputLabel>
                 <Select labelId="year"
-                        value={year}
-                        onChange={(e) => setYear(e.target.value as string)}
+                        value={ year }
+
+                        onChange={(e) => setYear(e.target.value)}
                 >
                     <MenuItem value="2021">2021</MenuItem>
                     <MenuItem value="2022">2022</MenuItem>
@@ -36,8 +46,8 @@ export default function MonthlyBalance() {
             <FormControl >
                 <InputLabel id="month">Choose a month</InputLabel>
                 <Select labelId="month"
-                        value={month}
-                        onChange={(e) => setMonth(e.target.value as string)}
+                        value={ month }
+                        onChange={(e) => setMonth(e.target.value)}
                 >
                     <MenuItem value="JANUARY">January</MenuItem>
                     <MenuItem value="FEBRUARY">February</MenuItem>

@@ -23,6 +23,7 @@ type State = {
     setUpdatedCardId: (id: string) => void;
     getIsCardUpdated: () => boolean;
     getUpdatedCard: () => Entry | undefined;
+
 }
 
 
@@ -32,6 +33,7 @@ export const useStore = create<State>((set, get) => ({
     monthlyBalances: {} as Record<string, MonthlyBalance >,
     isCardUpdated: false,
     updatedCardId: "",
+
 
 
     getEntries: () => {
@@ -114,10 +116,13 @@ export const useStore = create<State>((set, get) => ({
     },
 
     getUpdatedCard: () => {
+        const getEntries = get().getEntries
+        getEntries()
         const id = get().updatedCardId
         const entries = get().entries
         return entries.find(entry => entry.id === id)
-    }
+    },
+
 
 
 }));
