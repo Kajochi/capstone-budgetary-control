@@ -2,6 +2,7 @@ import styled from "@emotion/styled";
 import {FormControl, InputLabel, MenuItem, Select} from "@mui/material";
 import {useEffect, useState} from "react";
 import EntriesList from "../entriesList/EntriesList.tsx";
+import {useStore} from "../hooks/useStore.ts";
 
 
 type Props = {
@@ -14,7 +15,7 @@ export default function MonthlyBalance(props: Props) {
     const [month, setMonth] = useState<string>("JANUARY")
     const [monthYear, setMonthYear] = useState<string>("JANUARY-2021")
 
-
+    useStore.getState().getEntries()
 
     useEffect(() => {
         setMonthYear(month + "-" + year)
