@@ -1,22 +1,63 @@
 import {Entry} from "../model/Entry.ts";
 import EntryCard from "../entryCard/EntryCard.tsx";
 import {useStore} from "../hooks/useStore.ts";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
+import styled from "@emotion/styled";
+import MonthlyBalanceAmountsCard from "../monthlyBalanceAmountsCard/MonthlyBalanceAmountsCard.tsx";
 
 
+type Props = {
+    monthYear: string;
+}
 
-export default function EntriesList() {
-    const entries: Entry[] = useStore((state) => state.entries)
+export default function EntriesList(props: Props) {
+    const [monthlyEntries, setMonthlyEntries] = useState<Entry []>()
+
+    const monthlyBalances = useStore((state) => state.monthlyBalances)
+
     useEffect(() => {
-        useStore.getState().getEntries()
+        useStore.getState().getMonthlyBalances()
+
+        checkIfEntriesExist()
     }, [])
+
+    useEffect(() => {
+        checkIfEntriesExist()
+    }, [props.monthYear])
+
+    function checkIfEntriesExist() {
+        const entries = monthlyBalances?.[props.monthYear]?.monthlyEntries;
+
+        if (entries !== undefined) {
+            setMonthlyEntries(entries);
+        } else {
+            setMonthlyEntries(undefined);
+        }
+
+    }
+
     return (
         <>
+
             {
-                entries.map((entry) => <EntryCard entry={entry} key={entry.id} />)
+                monthlyEntries ? (
+                    <>
+                        <MonthlyBalanceAmountsCard monthlyBalance={monthlyBalances[props.monthYear]}/>
+                        {monthlyEntries?.map((entry: Entry) => {
+                            return <EntryCard key={entry.id} entry={entry} monthYear={props.monthYear}/>
+                        })}
+                    </>
+                ) : (
+                    <StyledP>There are no entries for this month</StyledP>
+                )
             }
 
         </>
 
     )
 }
+const StyledP = styled.p`
+  font-family: "Roboto Light", sans-serif;
+  display: flex;
+  justify-content: center;
+`;

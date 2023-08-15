@@ -8,6 +8,7 @@ import {useStore} from "../hooks/useStore.ts";
 
 type Props = {
     entry: Entry;
+    monthYear: string;
 }
 export default function EntryCard(props: Props) {
 
@@ -16,7 +17,7 @@ export default function EntryCard(props: Props) {
     const setIsCardUpdated  = useStore((state) => state.setIsCardUpdated)
     const setUpdatedCardId = useStore((state) => state.setUpdatedCardId)
 function handleClick() {
-    navigate("/add-entry/")
+    navigate(`/add-entry/?monthYear=${props.monthYear}`)
     setIsCardUpdated(true)
     setUpdatedCardId(props.entry.id)
 }
