@@ -5,8 +5,9 @@ import EntriesList from "../entriesList/EntriesList.tsx";
 
 
 type Props = {
-    monthYear: string;
+    monthYear: string | null;
 }
+
 
 export default function MonthlyBalance(props: Props) {
     const [year, setYear] = useState<string>("2021")
@@ -16,12 +17,20 @@ export default function MonthlyBalance(props: Props) {
 
 
     useEffect(() => {
-        if (props.monthYear) {
-            setMonth(props.monthYear.split("-")[0])
-            setYear(props.monthYear.split("-")[1])
-        }
         setMonthYear(month + "-" + year)
     }, [year, month])
+
+    useEffect(() => {
+        if (props.monthYear === null) {
+            setMonth("JANUARY")
+            setYear("2021")
+        }else {
+            const month = props.monthYear.split("-")[0]
+            const year = props.monthYear.split("-")[1]
+            setMonth(month)
+            setYear(year)
+        }
+    }, [])
 
     return (
         <div>

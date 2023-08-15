@@ -1,22 +1,23 @@
 
 import styled from "@emotion/styled";
 import AddIcon from "@mui/icons-material/Add";
-import {Link, useParams} from "react-router-dom";
+import {Link, useSearchParams} from "react-router-dom";
 import {IconButton} from "@mui/material";
 import FinanceReport from "../financeReport/FinanceReport.tsx";
 import MonthlyBalance from "../monthlyBalance/MonthlyBalance.tsx";
 
 export default function Home() {
 
-    const {monthYear} = useParams()
+    const [selectedMonthYear] = useSearchParams()
+    const monthYear = selectedMonthYear.get("monthYear")
     return (
         <div>
             <StyledH2>Home</StyledH2>
             <Link to={"/add-entry"}>
                 <StyledIconButton size={"small"}><AddIcon/></StyledIconButton>
             </Link>
-            <MonthlyBalance monthYear ={monthYear}/>
-            <FinanceReport/>
+            <MonthlyBalance monthYear={monthYear} />
+            <FinanceReport />
 
         </div>
     )

@@ -26,14 +26,14 @@ export default function EntriesList(props: Props) {
     }, [props.monthYear])
 
     function checkIfEntriesExist() {
-        if (
-            monthlyBalances[props.monthYear].monthlyEntries !== undefined
-        ) {
-            setMonthlyEntries(monthlyBalances[props.monthYear].monthlyEntries);
+        const entries = monthlyBalances?.[props.monthYear]?.monthlyEntries;
 
+        if (entries !== undefined) {
+            setMonthlyEntries(entries);
         } else {
             setMonthlyEntries(undefined);
         }
+
     }
 
     return (

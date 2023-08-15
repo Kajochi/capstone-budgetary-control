@@ -12,7 +12,7 @@ import React, {useEffect, useState} from "react";
 import {Category} from "../model/Category.ts";
 import {Interval} from "../model/Interval.ts";
 import {useStore} from "../hooks/useStore.ts";
-import {useNavigate, useParams} from "react-router-dom";
+import {useNavigate,  useSearchParams} from "react-router-dom";
 import {CostType} from "../model/CostType.ts";
 
 
@@ -26,7 +26,8 @@ export default function EntryAddUpdate() {
     const [category, setCategory] = useState<Category>("INCOME")
     const [costType, setCostType] = useState<CostType>("FIXED")
 
-    const {monthYear} = useParams()
+    const [selectedMonthYear] = useSearchParams()
+    const monthYear = selectedMonthYear.get("monthYear")
 
     const navigate = useNavigate()
     const getIsCardUpdated = useStore((state) => state.getIsCardUpdated)
@@ -96,13 +97,13 @@ export default function EntryAddUpdate() {
             costType: costType
         }
         updateEntry(requestBody, getUpdatedCard()?.id as string)
-        navigate("/")
+        navigate(`/?monthYear=${monthYear}`)
         resetAllUseStates()
     }
 
     function handleDelete() {
         deleteEntry(getUpdatedCard()?.id as string)
-        navigate("/")
+        navigate(`/?monthYear=${monthYear}`)
         resetAllUseStates()
     }
 
