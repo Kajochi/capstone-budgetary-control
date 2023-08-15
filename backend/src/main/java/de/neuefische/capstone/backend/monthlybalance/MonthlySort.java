@@ -84,7 +84,7 @@ public class MonthlySort {
                         && entry.getDate().getYear() == targetDate.getYear())
                 .filter(entry -> {
                     int multiplier = Interval.getMultiplier(entry.getInterval());
-                    int monthsSinceStart = Period.between(entry.getDate(), targetDate).getMonths();
+                    int monthsSinceStart = Period.between(entry.getDate(), targetDate.plusMonths(1)).getMonths();
                     return monthsSinceStart % multiplier == 0;
                 })
                 .toList();
