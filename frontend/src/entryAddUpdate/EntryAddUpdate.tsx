@@ -146,7 +146,7 @@ export default function EntryAddUpdate() {
 
                     <FormControl>
                         <InputLabel id="intervall">Interval</InputLabel>
-                        <Select labelId="intervall"
+                        <Select label="intervall"
                                 value={interval}
                                 onChange={(e) => setInterval(e.target.value as Interval)}
                         >

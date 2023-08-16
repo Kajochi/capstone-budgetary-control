@@ -11,8 +11,8 @@ type Props = {
 
 
 export default function MonthlyBalance(props: Props) {
-    const [year, setYear] = useState<string>("2021")
-    const [month, setMonth] = useState<string>("JANUARY")
+    const [year, setYear] = useState<string>(props.monthYear? props.monthYear.split("-")[1] : "2021")
+    const [month, setMonth] = useState<string>(props.monthYear? props.monthYear.split("-")[0] : "JANUARY")
     const [monthYear, setMonthYear] = useState<string>("JANUARY-2021")
 
     useStore.getState().getEntries()
@@ -21,28 +21,15 @@ export default function MonthlyBalance(props: Props) {
         setMonthYear(month + "-" + year)
     }, [year, month])
 
-    useEffect(() => {
-        if (props.monthYear === null) {
-            setMonth("JANUARY")
-            setYear("2021")
-        }else {
-            const month = props.monthYear.split("-")[0]
-            const year = props.monthYear.split("-")[1]
-            setMonth(month)
-            setYear(year)
-        }
-    }, [])
-
     return (
         <div>
             <StyledH2>Monthly Balance</StyledH2>
             <StyledDropDownContainer>
-                <StyledDiv>
+
             <FormControl >
                 <InputLabel id="year">Choose a Year</InputLabel>
-                <Select labelId="year"
+                <Select label="Choose a Year"
                         value={ year }
-
                         onChange={(e) => setYear(e.target.value)}
                 >
                     <MenuItem value="2021">2021</MenuItem>
@@ -54,7 +41,7 @@ export default function MonthlyBalance(props: Props) {
 
             <FormControl >
                 <InputLabel id="month">Choose a month</InputLabel>
-                <Select labelId="month"
+                <Select label="Choose a month"
                         value={ month }
                         onChange={(e) => setMonth(e.target.value)}
                 >
@@ -73,7 +60,7 @@ export default function MonthlyBalance(props: Props) {
 
                 </Select>
             </FormControl>
-                </StyledDiv>
+
                 </StyledDropDownContainer>
             <EntriesList monthYear={monthYear}/>
         </div>
@@ -88,13 +75,8 @@ const StyledH2 = styled.h2`
 
 const StyledDropDownContainer = styled.div`
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     gap: 20px;
     margin: 20px;
     `;
 
-const StyledDiv = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin: 16px;
-`;
