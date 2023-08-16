@@ -6,13 +6,22 @@ import {useStore} from "../hooks/useStore.ts";
 
 
 type Props = {
-    monthYear: string | null;
+    monthYear: string ;
 }
 
 
 export default function MonthlyBalance(props: Props) {
-    const [year, setYear] = useState<string>(props.monthYear? props.monthYear.split("-")[1] : "2021")
-    const [month, setMonth] = useState<string>(props.monthYear? props.monthYear.split("-")[0] : "JANUARY")
+
+    function isPropsNull() {
+        if (props.monthYear === "null") {
+            return null
+        }else {
+            return props.monthYear
+        }
+    }
+
+    const [year, setYear] = useState<string>(isPropsNull()? props.monthYear.split("-")[1] : "2021")
+    const [month, setMonth] = useState<string>(isPropsNull()? props.monthYear.split("-")[0] : "JANUARY")
     const [monthYear, setMonthYear] = useState<string>("JANUARY-2021")
 
     useStore.getState().getEntries()
@@ -27,8 +36,8 @@ export default function MonthlyBalance(props: Props) {
             <StyledDropDownContainer>
 
             <FormControl >
-                <InputLabel id="year">Choose a Year</InputLabel>
-                <Select label="Choose a Year"
+                <InputLabel id="year">Choose a year</InputLabel>
+                <Select label="Choose a Year" labelId={"year"}
                         value={ year }
                         onChange={(e) => setYear(e.target.value)}
                 >
@@ -41,7 +50,7 @@ export default function MonthlyBalance(props: Props) {
 
             <FormControl >
                 <InputLabel id="month">Choose a month</InputLabel>
-                <Select label="Choose a month"
+                <Select label="Choose a month" labelId={"month"}
                         value={ month }
                         onChange={(e) => setMonth(e.target.value)}
                 >
