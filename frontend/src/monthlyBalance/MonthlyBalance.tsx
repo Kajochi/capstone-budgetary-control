@@ -37,7 +37,7 @@ export default function MonthlyBalance(props: Props) {
         <div>
             <StyledH2>Monthly Balance</StyledH2>
             <StyledDropDownContainer>
-                <div>
+                <StyledDiv>
             <FormControl >
                 <InputLabel id="year">Choose a Year</InputLabel>
                 <Select labelId="year"
@@ -51,8 +51,7 @@ export default function MonthlyBalance(props: Props) {
                     <MenuItem value="2024">2024</MenuItem>
                 </Select>
             </FormControl>
-                </div>
-                <div>
+
             <FormControl >
                 <InputLabel id="month">Choose a month</InputLabel>
                 <Select labelId="month"
@@ -74,7 +73,7 @@ export default function MonthlyBalance(props: Props) {
 
                 </Select>
             </FormControl>
-                </div>
+                </StyledDiv>
                 </StyledDropDownContainer>
             <EntriesList monthYear={monthYear}/>
         </div>
@@ -93,3 +92,9 @@ const StyledDropDownContainer = styled.div`
     gap: 20px;
     margin: 20px;
     `;
+
+const StyledDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: 16px;
+`;
