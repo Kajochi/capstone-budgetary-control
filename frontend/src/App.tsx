@@ -15,7 +15,7 @@ export default function App() {
         <>
             <StyledDiv>
                 <HeaderChildDiv1 >
-                    <SavingsIcon/>
+                    <SavingsIcon fontSize="large"/>
                 </HeaderChildDiv1>
                 <StyledH1 >Budgetary Control</StyledH1>
                 <HeaderChildDiv3 >
@@ -49,6 +49,7 @@ const StyledDiv = styled.div`
   width: 100%;
   margin-top: 15px;
   border-radius: 7px;
+  box-shadow: 10px 10px 5px -4px silver;
 `;
 const HeaderChildDiv1 = styled.div`
   justify-content: flex-start;

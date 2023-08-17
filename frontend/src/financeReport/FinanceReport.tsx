@@ -6,6 +6,7 @@ import {useEffect, useState} from "react";
 import {useStore} from "../hooks/useStore.ts";
 import FinanceReportCard from "../financeReportCard/FinanceReportCard.tsx";
 import {Interval} from "../model/Interval.ts";
+import CalculateIcon from '@mui/icons-material/Calculate';
 
 
 
@@ -16,7 +17,7 @@ export default function FinanceReport() {
    const financeReports = useStore((state) => state.financeReports)
 
     const getFinanceReports = useStore((state) => state.getFinanceReports)
-    
+
     useEffect(() => {
         getFinanceReports()
     }, [])
@@ -26,8 +27,11 @@ export default function FinanceReport() {
 
     return (
         <div>
+            <HeadingDiv>
             <StyledH2>Finance Report</StyledH2>
-            <FormControl >
+                <CalculateIcon fontSize="large" />
+            </HeadingDiv>
+            <StyledFormControl >
                 <InputLabel id="period">Period</InputLabel>
                 <Select labelId="period" label={"Period"}
                         value={period}
@@ -38,7 +42,7 @@ export default function FinanceReport() {
                     <MenuItem value="HALF_YEARLY">Half Yearly</MenuItem>
                     <MenuItem value="YEARLY">Yearly</MenuItem>
                 </Select>
-            </FormControl>
+            </StyledFormControl>
             <FinanceReportCard period={period} financeReports={financeReports}/>
         </div>
     )
@@ -48,4 +52,15 @@ const StyledH2 = styled.h2`
   font-family: "Roboto Light", sans-serif;
   display: flex;
   justify-content: center;
+    `;
+
+const StyledFormControl = styled(FormControl)`
+    display: flex;
+    justify-content: center;
+  margin: 25px;
+    `;
+const HeadingDiv = styled.div`
+     display: flex;
+    justify-content: center;
+    align-items: center;
     `;

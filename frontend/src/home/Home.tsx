@@ -5,6 +5,7 @@ import {Link, useSearchParams} from "react-router-dom";
 import {IconButton} from "@mui/material";
 import {useStore} from "../hooks/useStore.ts";
 import {useEffect} from "react";
+import HomeIcon from '@mui/icons-material/Home';
 
 
 export default function Home() {
@@ -25,7 +26,10 @@ export default function Home() {
 
     return (
         <div>
+            <HeadingDiv>
             <StyledH2>Home</StyledH2>
+            <HomeIcon fontSize="large"/>
+            </HeadingDiv>
             <IntroductoryText>
                 <h4>Welcome to Budgetary Control!</h4>
                 This is a simple app that helps you keep track of your expenses and
@@ -67,7 +71,9 @@ const StyledH2 = styled.h2`
   font-family: "Roboto Light", sans-serif;
   display: flex;
   justify-content: center;
-    `;
+  margin-right: 4px;
+  margin-top: 25px;
+`;
 
 const StyledLink = styled(Link)`
     display: flex;
@@ -75,7 +81,7 @@ const StyledLink = styled(Link)`
   `;
 
 const StyledIconButton = styled(IconButton)`
-  background-color: #f62929;
+  background-color: #4d6bdd;
   display: flex;
   justify-content: center;
 
@@ -89,48 +95,63 @@ const StyledIconButton = styled(IconButton)`
 const IntroductoryText = styled.div`
   padding: 16px;
   border-radius: 7px;
-  background-color: #7c9be0;
+  background-color:#edf0fc;
   font-family: "Roboto Light", sans-serif;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin: 16px;
+  margin-right: 20px;
+  margin-left: 20px;
+  margin-bottom: 25px;
   font-size: 16px;
   font-weight: 500;
   line-height: 1.6;
   letter-spacing: 0.0075em;
   text-align: center;
- 
+  box-shadow: 10px 10px 5px -4px silver;
 `;
 
 const ExplanationText = styled.div`
   padding: 16px;
   border-radius: 7px;
-  background-color: #627ca8;
+  color: #ffffff;
+  background-color: #4d6bdd;
   font-family: "Roboto Light", sans-serif;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin: 16px;
+  margin-right: 20px;
+  margin-left: 20px;
+  margin-bottom: 25px;
   font-size: 16px;
   font-weight: 500;
   line-height: 1.6;
   letter-spacing: 0.0075em;
   text-align: center;
+  box-shadow: 10px 10px 5px -4px silver;
 `;
 
 const UpcomingFeatures = styled.div`
   padding: 16px;
   border-radius: 7px;
-  background-color: #f15e2f;
+  background-color: #edf0fc;
   font-family: "Roboto Light", sans-serif;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin: 16px;
+  margin-right: 20px;
+  margin-left: 20px;
+  margin-bottom: 25px;
   font-size: 16px;
   font-weight: 500;
   line-height: 1.6;
   letter-spacing: 0.0075em;
   text-align: center;
+  box-shadow: 10px 10px 5px -4px silver;
 `;
+
+const HeadingDiv = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    `;

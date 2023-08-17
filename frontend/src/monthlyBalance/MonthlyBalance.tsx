@@ -34,12 +34,12 @@ export default function MonthlyBalance(props: Props) {
         <div>
             <HeadingDiv>
             <StyledH2>Monthly Balance</StyledH2>
-            <AccountBalanceIcon/>
+            <AccountBalanceIcon fontSize="large"/>
             </HeadingDiv>
             <ExplonationText>
 
                 <p>Here you can see your monthly balance.
-                Choose a month and a year to see the balance of this chosen month.</p>
+                    Select a month and year to view the balance and all transactions for that selected month. </p>
             </ExplonationText>
             <StyledDropDownContainer>
 
@@ -87,29 +87,36 @@ const StyledH2 = styled.h2`
   display: flex;
   justify-content: center;
   margin-right: 4px;
+  margin-top: 25px;
     `;
 
 const StyledDropDownContainer = styled.div`
     display: flex;
     flex-direction: column;
+    justify-content: center;
     gap: 20px;
     margin: 25px;
+  margin-top: 40px;
+  
     `;
 
 const ExplonationText = styled.div`
   padding: 4px;
   border-radius: 7px;
-  background-color: #33ec97;
+  background-color: #edf0fc;
   font-family: "Roboto Light", sans-serif;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin: 16px;
+  margin-right: 20px;
+  margin-left: 20px;
+  margin-bottom: 25px;
   font-size: 16px;
   font-weight: 500;
   line-height: 1.6;
   letter-spacing: 0.0075em;
   text-align: center;
+  box-shadow: 10px 10px 5px -4px silver;  
  `;
 
 const HeadingDiv = styled.div`

@@ -45,6 +45,7 @@ const StyledDivContainer = styled.div`
   justify-content: space-around;
   margin-left: 30px;
   margin-right: 30px;
+  box-shadow: 10px 10px 5px -4px silver;
   grid-template-areas:
     "totalIncome totalIncomeAmount"
      "divider1 divider1"
@@ -114,12 +115,14 @@ const OneTimeCostsAmountP = styled.p`
 const BalanceP = styled.p`
     grid-area: balance;
   font-family: "Roboto Light", sans-serif;
+  font-weight: bold;
     `;
 const BalanceAmountP = styled.p`
     grid-area: balanceAmount;
   font-family: "Roboto Light", sans-serif;
   display: flex;
   justify-content: flex-end;
+  font-weight: bold;
     `;
 const Divider1 = styled(Divider)`
     grid-area: divider1;
