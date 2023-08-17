@@ -4,6 +4,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MenuIcon from '@mui/icons-material/Menu';
 import {useState} from "react";
+import {useNavigate} from "react-router-dom";
 
 const options = [
     'Home',
@@ -18,11 +19,28 @@ const ITEM_HEIGHT = 48;
 export default function LongMenu() {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
+
+    const navigate = useNavigate()
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
     };
-    const handleClose = () => {
+    const handleClickOnItem = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(null);
+        const item = event.currentTarget.textContent
+        switch (item) {
+            case "Home":
+                navigate("/")
+                break;
+            case "Add Entry":
+                navigate("/add-entry")
+                break;
+            case "Monthly Balance":
+                navigate("/monthlyBalance")
+                break;
+            case "Finance Report":
+                navigate("/financeReport")
+                break;
+        }
     };
 
     return (
@@ -44,7 +62,7 @@ export default function LongMenu() {
                 }}
                 anchorEl={anchorEl}
                 open={open}
-                onClose={handleClose}
+                onClose={handleClickOnItem}
                 PaperProps={{
                     style: {
                         maxHeight: ITEM_HEIGHT * 4.5,
@@ -53,7 +71,7 @@ export default function LongMenu() {
                 }}
             >
                 {options.map((option) => (
-                    <MenuItem key={option} selected={option === 'Pyxis'} onClick={handleClose}>
+                    <MenuItem key={option} value={option} onClick={handleClickOnItem}>
                         {option}
                     </MenuItem>
                 ))}

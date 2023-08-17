@@ -6,7 +6,7 @@ import {useStore} from "../hooks/useStore.ts";
 
 
 type Props = {
-    monthYear: string ;
+    monthYear: string;
 }
 
 

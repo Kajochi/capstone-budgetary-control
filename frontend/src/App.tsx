@@ -1,13 +1,16 @@
 import styled from "@emotion/styled";
-import {Route, Routes} from "react-router-dom";
+import {Route, Routes, useSearchParams} from "react-router-dom";
 import EntryAddUpdate from "./entryAddUpdate/EntryAddUpdate.tsx";
 import Home from "./home/Home.tsx";
 import LongMenu from "./navBar/LongMenu.tsx";
 import SavingsIcon from '@mui/icons-material/Savings';
+import MonthlyBalance from "./monthlyBalance/MonthlyBalance.tsx";
+import FinanceReport from "./financeReport/FinanceReport.tsx";
 
 export default function App() {
 
-
+    const [selectedMonthYear] = useSearchParams()
+    const monthYear = selectedMonthYear.get("monthYear")
     return (
         <>
             <StyledDiv>
@@ -24,6 +27,8 @@ export default function App() {
             <Routes>
                 <Route path={"/"} element={<Home/>}/>
                 <Route path={"/add-entry"} element={<EntryAddUpdate/>}/>
+                <Route path={"/monthlyBalance"} element={<MonthlyBalance monthYear={monthYear}/>}/>
+                <Route path={"/financeReport"} element={<FinanceReport/>}/>
             </Routes>
 
         </>
@@ -38,7 +43,7 @@ const StyledH1 = styled.h2`
 
 const StyledDiv = styled.div`
   display: flex;
-  background-color: #3189d5;
+  background-color: #49e0e3;
   align-items: center;
   width: 100%;
   margin-top: 15px;
