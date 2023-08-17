@@ -20,8 +20,6 @@ import {CostType} from "../model/CostType.ts";
 export default function EntryAddUpdate() {
 
 
-
-
     const [interval, setInterval] = useState<Interval>('ONCE');
     const [title, setTitle] = useState<string>("")
     const [description, setDescription] = useState<string>("")

@@ -17,9 +17,7 @@ export default function App() {
                 <HeaderChildDiv1 >
                     <SavingsIcon/>
                 </HeaderChildDiv1>
-                <HeaderChildDiv2 >
                 <StyledH1 >Budgetary Control</StyledH1>
-                </HeaderChildDiv2>
                 <HeaderChildDiv3 >
                     <LongMenu/>
                 </HeaderChildDiv3>
@@ -38,12 +36,15 @@ export default function App() {
 
 const StyledH1 = styled.h2`
   font-family: "Roboto Light", sans-serif;
-  
+  color: #ffffff;
+  justify-content: center;
+  width: 100%;
+  margin-left: 5px;
 `;
 
 const StyledDiv = styled.div`
   display: flex;
-  background-color: #49e0e3;
+  background-color: #4d6bdd;
   align-items: center;
   width: 100%;
   margin-top: 15px;
@@ -54,14 +55,11 @@ const HeaderChildDiv1 = styled.div`
   margin-left: 10px;
  
 `;
-const HeaderChildDiv2 = styled.div`
-    justify-content: center;
-    width: 100%;
-  margin-left: 5px;
-`;
+
 
 const HeaderChildDiv3 = styled.div`
     justify-content: flex-end;
   margin-right: 10px;
+  
 `;
 
