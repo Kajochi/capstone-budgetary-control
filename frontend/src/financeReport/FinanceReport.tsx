@@ -15,11 +15,11 @@ export default function FinanceReport() {
 
    const financeReports = useStore((state) => state.financeReports)
 
+    const getFinanceReports = useStore((state) => state.getFinanceReports)
+    
     useEffect(() => {
-        useStore.getState().getFinanceReports()
-
+        getFinanceReports()
     }, [])
-
 
 
 
@@ -29,7 +29,7 @@ export default function FinanceReport() {
             <StyledH2>Finance Report</StyledH2>
             <FormControl >
                 <InputLabel id="period">Period</InputLabel>
-                <Select labelId="intervall"
+                <Select labelId="period" label={"Period"}
                         value={period}
                         onChange={(e) => setPeriod(e.target.value as Interval)}
                 >
