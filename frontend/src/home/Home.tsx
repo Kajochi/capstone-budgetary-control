@@ -89,7 +89,7 @@ const StyledIconButton = styled(IconButton)`
 const IntroductoryText = styled.div`
   padding: 16px;
   border-radius: 7px;
-  background-color: #33ec97;
+  background-color: #7c9be0;
   font-family: "Roboto Light", sans-serif;
   display: flex;
   flex-direction: column;
@@ -106,7 +106,7 @@ const IntroductoryText = styled.div`
 const ExplanationText = styled.div`
   padding: 16px;
   border-radius: 7px;
-  background-color: #c25aee;
+  background-color: #627ca8;
   font-family: "Roboto Light", sans-serif;
   display: flex;
   flex-direction: column;

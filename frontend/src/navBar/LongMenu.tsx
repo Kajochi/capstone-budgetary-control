@@ -8,9 +8,9 @@ import {useNavigate} from "react-router-dom";
 
 const options = [
     'Home',
-    'Add Entry',
     'Monthly Balance',
     'Finance Report',
+    'Add Entry',
 
 ];
 
@@ -53,7 +53,7 @@ export default function LongMenu() {
                 aria-haspopup="true"
                 onClick={handleClick}
             >
-                <MenuIcon />
+                <MenuIcon/>
             </IconButton>
             <Menu
                 id="long-menu"
