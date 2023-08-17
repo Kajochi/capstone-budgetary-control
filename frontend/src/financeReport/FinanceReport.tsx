@@ -31,6 +31,11 @@ export default function FinanceReport() {
             <StyledH2>Finance Report</StyledH2>
                 <CalculateIcon fontSize="large" />
             </HeadingDiv>
+            <ExplonationText>
+                <p>Here you can display your financial report for four different time periods.
+                    Recurring transactions are counted up or down. One-off costs are not included.
+                    This gives you an overview of your financial situation.</p>
+            </ExplonationText>
             <StyledFormControl >
                 <InputLabel id="period">Period</InputLabel>
                 <Select labelId="period" label={"Period"}
@@ -64,3 +69,22 @@ const HeadingDiv = styled.div`
     justify-content: center;
     align-items: center;
     `;
+
+const ExplonationText = styled.div`
+  padding: 4px;
+  border-radius: 7px;
+  background-color: #edf0fc;
+  font-family: "Roboto Light", sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-right: 20px;
+  margin-left: 20px;
+  margin-bottom: 25px;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.6;
+  letter-spacing: 0.0075em;
+  text-align: center;
+  box-shadow: 10px 10px 5px -4px silver;  
+ `;
