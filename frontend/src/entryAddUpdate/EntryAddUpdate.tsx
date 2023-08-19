@@ -81,8 +81,8 @@ export default function EntryAddUpdate() {
             costType: costType
         }
         createEntry(requestBody)
-        navigate(`/?monthYear=${monthYear}`)
-
+        navigate(`/monthlyBalance/?monthYear=${monthYear}`)
+        setIsCardUpdated(false)
         resetAllUseStates()
 
     }
@@ -99,14 +99,16 @@ export default function EntryAddUpdate() {
             costType: costType
         }
         updateEntry(requestBody, getUpdatedCard()?.id as string)
-        navigate(`/?monthYear=${monthYear}`)
+        navigate(`/monthlyBalance/?monthYear=${monthYear}`)
         resetAllUseStates()
+        setIsCardUpdated(false)
     }
 
     function handleDelete() {
         deleteEntry(getUpdatedCard()?.id as string)
-        navigate(`/?monthYear=${monthYear}`)
+        navigate(`/monthlyBalance/?monthYear=${monthYear}`)
         resetAllUseStates()
+        setIsCardUpdated(false)
     }
 
     function handleChangeCategory(_: React.MouseEvent<HTMLElement>, newCategory: Category) {
@@ -117,7 +119,7 @@ export default function EntryAddUpdate() {
         setCostType(newCostType)
     }
     function handleCancel() {
-        navigate(`/?monthYear=${monthYear}`)
+        navigate(`/monthlyBalance/?monthYear=${monthYear}`)
         resetAllUseStates()
         setIsCardUpdated(false)
     }

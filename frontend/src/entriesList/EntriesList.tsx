@@ -14,12 +14,12 @@ export default function EntriesList(props: Props) {
     const [monthlyEntries, setMonthlyEntries] = useState<Entry []>()
 
     const monthlyBalances = useStore((state) => state.monthlyBalances)
-
+    const getMonthlyBalances = useStore((state) => state.getMonthlyBalances)
     useEffect(() => {
-        useStore.getState().getMonthlyBalances()
+        getMonthlyBalances()
 
         checkIfEntriesExist()
-    }, [])
+    }, [getMonthlyBalances])
 
     useEffect(() => {
         checkIfEntriesExist()
