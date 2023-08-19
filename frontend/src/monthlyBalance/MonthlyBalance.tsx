@@ -18,16 +18,15 @@ export default function MonthlyBalance(props: Props) {
 
     const [year, setYear] = useState<string>(initialYear)
     const [month, setMonth] = useState<string>(initialMonth)
-   // const [monthYear, setMonthYear] = useState<string>("JANUARY-2023")
+
     const monthYear = `${month}-${year}`
     const getEntries = useStore((state) => state.getEntries)
-  /*  useEffect(() => {
-        setMonthYear(month + "-" + year)
-    }, [year, month])*/
+
 
     useEffect(() => {
         getEntries()
     }, [])
+
     return (
         <div>
             <HeadingDiv>
