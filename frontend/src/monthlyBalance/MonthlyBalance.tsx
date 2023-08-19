@@ -3,59 +3,63 @@ import {FormControl, InputLabel, MenuItem, Select} from "@mui/material";
 import {useEffect, useState} from "react";
 import EntriesList from "../entriesList/EntriesList.tsx";
 import {useStore} from "../hooks/useStore.ts";
-
+import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 
 type Props = {
-    monthYear: string | null;
+    monthYear: string;
 }
 
 
 export default function MonthlyBalance(props: Props) {
-    const [year, setYear] = useState<string>("2021")
-    const [month, setMonth] = useState<string>("JANUARY")
-    const [monthYear, setMonthYear] = useState<string>("JANUARY-2021")
 
-    useStore.getState().getEntries()
+    function isPropsNull() {
+        if (props.monthYear === "null") {
+            return null
+        }else {
+            return props.monthYear
+        }
+    }
 
+    const [year, setYear] = useState<string>(isPropsNull()? props.monthYear.split("-")[1] : "2023")
+    const [month, setMonth] = useState<string>(isPropsNull()? props.monthYear.split("-")[0] : "JANUARY")
+    const [monthYear, setMonthYear] = useState<string>("JANUARY-2023")
+
+    const getEntries = useStore((state) => state.getEntries)
     useEffect(() => {
         setMonthYear(month + "-" + year)
     }, [year, month])
 
     useEffect(() => {
-        if (props.monthYear === null) {
-            setMonth("JANUARY")
-            setYear("2021")
-        }else {
-            const month = props.monthYear.split("-")[0]
-            const year = props.monthYear.split("-")[1]
-            setMonth(month)
-            setYear(year)
-        }
+        getEntries()
     }, [])
-
     return (
         <div>
+            <HeadingDiv>
             <StyledH2>Monthly Balance</StyledH2>
-            <StyledDropDownContainer>
-                <div>
-            <FormControl >
-                <InputLabel id="year">Choose a Year</InputLabel>
-                <Select labelId="year"
-                        value={ year }
+            <AccountBalanceIcon fontSize="large"/>
+            </HeadingDiv>
+            <ExplonationText>
 
+                <p>Here you can see your monthly balance.
+                    Select a month and year to view the balance and all transactions for that selected month. </p>
+            </ExplonationText>
+            <StyledDropDownContainer>
+
+            <FormControl >
+                <InputLabel id="year">Choose a year</InputLabel>
+                <Select label="Choose a Year" labelId={"year"}
+                        value={ year }
                         onChange={(e) => setYear(e.target.value)}
                 >
-                    <MenuItem value="2021">2021</MenuItem>
-                    <MenuItem value="2022">2022</MenuItem>
+
                     <MenuItem value="2023">2023</MenuItem>
                     <MenuItem value="2024">2024</MenuItem>
                 </Select>
             </FormControl>
-                </div>
-                <div>
+
             <FormControl >
                 <InputLabel id="month">Choose a month</InputLabel>
-                <Select labelId="month"
+                <Select label="Choose a month" labelId={"month"}
                         value={ month }
                         onChange={(e) => setMonth(e.target.value)}
                 >
@@ -74,7 +78,6 @@ export default function MonthlyBalance(props: Props) {
 
                 </Select>
             </FormControl>
-                </div>
                 </StyledDropDownContainer>
             <EntriesList monthYear={monthYear}/>
         </div>
@@ -85,11 +88,41 @@ const StyledH2 = styled.h2`
   font-family: "Roboto Light", sans-serif;
   display: flex;
   justify-content: center;
+  margin-right: 4px;
+  margin-top: 25px;
     `;
 
 const StyledDropDownContainer = styled.div`
     display: flex;
+    flex-direction: column;
     justify-content: center;
     gap: 20px;
-    margin: 20px;
+    margin: 25px;
+  margin-top: 40px;
+  
+    `;
+
+const ExplonationText = styled.div`
+  padding: 4px;
+  border-radius: 7px;
+  background-color: #edf0fc;
+  font-family: "Roboto Light", sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-right: 20px;
+  margin-left: 20px;
+  margin-bottom: 25px;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.6;
+  letter-spacing: 0.0075em;
+  text-align: center;
+  box-shadow: 10px 10px 5px -4px silver;  
+ `;
+
+const HeadingDiv = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
     `;

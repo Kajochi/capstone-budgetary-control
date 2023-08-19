@@ -8,7 +8,7 @@ import {
     ToggleButton,
     ToggleButtonGroup
 } from "@mui/material";
-import React, { useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Category} from "../model/Category.ts";
 import {Interval} from "../model/Interval.ts";
 import {useStore} from "../hooks/useStore.ts";
@@ -19,16 +19,14 @@ import {CostType} from "../model/CostType.ts";
 
 export default function EntryAddUpdate() {
 
-    const getUpdatedCard = useStore((state) => state.getUpdatedCard)
-    const updatedCard = getUpdatedCard()
 
-    const [interval, setInterval] = useState<Interval>(updatedCard? updatedCard.interval : 'ONCE');
-    const [title, setTitle] = useState<string>(updatedCard? updatedCard.title :"")
-    const [description, setDescription] = useState<string>(updatedCard? updatedCard.description : "")
-    const [amount, setAmount] = useState<string>(updatedCard? updatedCard.amount : "")
-    const [date, setDate] = useState<string>(updatedCard? updatedCard.date :"")
-    const [category, setCategory] = useState<Category>(updatedCard? updatedCard.category: "INCOME")
-    const [costType, setCostType] = useState<CostType>(updatedCard? updatedCard.costType:"FIXED")
+    const [interval, setInterval] = useState<Interval>('ONCE');
+    const [title, setTitle] = useState<string>("")
+    const [description, setDescription] = useState<string>("")
+    const [amount, setAmount] = useState<string>( "")
+    const [date, setDate] = useState<string>("")
+    const [category, setCategory] = useState<Category>( "INCOME")
+    const [costType, setCostType] = useState<CostType>("FIXED")
 
     const [selectedMonthYear] = useSearchParams()
     const monthYear = selectedMonthYear.get("monthYear")
@@ -40,9 +38,20 @@ export default function EntryAddUpdate() {
     const createEntry = useStore((state) => state.createEntry)
     const updateEntry = useStore((state) => state.updateEntry)
     const deleteEntry = useStore((state) => state.deleteEntry)
+    const getUpdatedCard = useStore((state) => state.getUpdatedCard)
 
-
-
+    useEffect(() => {
+        const updatedCard = getUpdatedCard()
+        if (updatedCard && getIsCardUpdated()) {
+            setInterval(updatedCard.interval)
+            setTitle(updatedCard.title)
+            setDescription(updatedCard.description)
+            setAmount(updatedCard.amount)
+            setDate(updatedCard.date)
+            setCategory(updatedCard.category)
+            setCostType(updatedCard.costType)
+        }
+    }, [])
 
 
     function resetAllUseStates() {
@@ -72,8 +81,8 @@ export default function EntryAddUpdate() {
             costType: costType
         }
         createEntry(requestBody)
-        navigate(`/?monthYear=${monthYear}`)
-
+        navigate(`/monthlyBalance/?monthYear=${monthYear}`)
+        setIsCardUpdated(false)
         resetAllUseStates()
 
     }
@@ -90,14 +99,16 @@ export default function EntryAddUpdate() {
             costType: costType
         }
         updateEntry(requestBody, getUpdatedCard()?.id as string)
-        navigate(`/?monthYear=${monthYear}`)
+        navigate(`/monthlyBalance/?monthYear=${monthYear}`)
         resetAllUseStates()
+        setIsCardUpdated(false)
     }
 
     function handleDelete() {
         deleteEntry(getUpdatedCard()?.id as string)
-        navigate(`/?monthYear=${monthYear}`)
+        navigate(`/monthlyBalance/?monthYear=${monthYear}`)
         resetAllUseStates()
+        setIsCardUpdated(false)
     }
 
     function handleChangeCategory(_: React.MouseEvent<HTMLElement>, newCategory: Category) {
@@ -108,7 +119,7 @@ export default function EntryAddUpdate() {
         setCostType(newCostType)
     }
     function handleCancel() {
-        navigate(`/?monthYear=${monthYear}`)
+        navigate(`/monthlyBalance/?monthYear=${monthYear}`)
         resetAllUseStates()
         setIsCardUpdated(false)
     }
@@ -135,7 +146,7 @@ export default function EntryAddUpdate() {
 
                     <FormControl>
                         <InputLabel id="intervall">Interval</InputLabel>
-                        <Select labelId="intervall"
+                        <Select label="intervall"
                                 value={interval}
                                 onChange={(e) => setInterval(e.target.value as Interval)}
                         >

@@ -121,6 +121,7 @@ export const useStore = create<State>((set, get) => ({
         const id = get().updatedCardId
         const entries = get().entries
         return entries.find(entry => entry.id === id)
+
     },
 
 
