@@ -11,6 +11,7 @@ export default function App() {
 
     const [selectedMonthYear] = useSearchParams()
     const monthYear = selectedMonthYear.get("monthYear")
+
     return (
         <>
             <StyledDiv>
