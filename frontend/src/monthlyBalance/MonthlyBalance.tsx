@@ -6,12 +6,8 @@ import {useStore} from "../hooks/useStore.ts";
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 
 
-type Props = {
-    monthYear: string | null;
-}
 
-
-export default function MonthlyBalance(props: Props) {
+export default function MonthlyBalance() {
 
     const selectedMonthYear = useStore((state) => state.selectedMonthYear)
 
@@ -25,11 +21,12 @@ export default function MonthlyBalance(props: Props) {
     const getEntries = useStore((state) => state.getEntries)
     const setSelectedMonthYear = useStore((state) => state.setSelectedMonthYear)
 
-    setSelectedMonthYear(monthYear)
+
 
     useEffect(() => {
         getEntries()
-    }, [])
+        setSelectedMonthYear(monthYear)
+    }, [getEntries, setSelectedMonthYear, monthYear])
 
     return (
         <div>

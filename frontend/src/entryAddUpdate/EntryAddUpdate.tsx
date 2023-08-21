@@ -12,7 +12,7 @@ import React, {useState} from "react";
 import {Category} from "../model/Category.ts";
 import {Interval} from "../model/Interval.ts";
 import {useStore} from "../hooks/useStore.ts";
-import {useNavigate, useSearchParams} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {CostType} from "../model/CostType.ts";
 
 
@@ -30,8 +30,7 @@ export default function EntryAddUpdate() {
     const [category, setCategory] = useState<Category>(updatedCard && getIsCardUpdated() ? updatedCard.category : "INCOME")
     const [costType, setCostType] = useState<CostType>(updatedCard && getIsCardUpdated() ? updatedCard.costType : "FIXED")
 
-    const [selectedMonthYear] = useSearchParams()
-    const monthYear = selectedMonthYear.get("monthYear")
+
 
     const navigate = useNavigate()
     const setIsCardUpdated = useStore((state) => state.setIsCardUpdated)
@@ -68,7 +67,7 @@ export default function EntryAddUpdate() {
             costType: costType
         }
         createEntry(requestBody)
-        navigate(`/monthlyBalance/?monthYear=${monthYear}`)
+        navigate(`/monthlyBalance`)
         setIsCardUpdated(false)
         resetAllUseStates()
 
@@ -86,21 +85,21 @@ export default function EntryAddUpdate() {
             costType: costType
         }
         updateEntry(requestBody, getUpdatedCard()?.id as string)
-        navigate(`/monthlyBalance/?monthYear=${monthYear}`)
+        navigate(`/monthlyBalance`)
         resetAllUseStates()
         setIsCardUpdated(false)
     }
 
     function handleDelete() {
         deleteEntry(getUpdatedCard()?.id as string)
-        navigate(`/monthlyBalance/?monthYear=${monthYear}`)
+        navigate(`/monthlyBalance`)
         resetAllUseStates()
         setIsCardUpdated(false)
     }
 
 
     function handleCancel() {
-        navigate(`/monthlyBalance/?monthYear=${monthYear}`)
+        navigate(`/monthlyBalance`)
         resetAllUseStates()
         setIsCardUpdated(false)
     }
