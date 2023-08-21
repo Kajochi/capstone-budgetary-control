@@ -26,7 +26,7 @@ export default function EntryCard(props: Props) {
     const setUpdatedCardId = useStore((state) => state.setUpdatedCardId)
 
     function handleClick() {
-        navigate(`/add-entry/?monthYear=${props.monthYear}`)
+        navigate(`/add-entry`)
         setIsCardUpdated(true)
         setUpdatedCardId(props.entry.id)
     }

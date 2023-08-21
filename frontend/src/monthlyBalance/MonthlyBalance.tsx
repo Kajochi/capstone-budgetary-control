@@ -5,33 +5,29 @@ import EntriesList from "../entriesList/EntriesList.tsx";
 import {useStore} from "../hooks/useStore.ts";
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 
-type Props = {
-    monthYear: string;
-}
 
 
-export default function MonthlyBalance(props: Props) {
+export default function MonthlyBalance() {
 
-    function isPropsNull() {
-        if (props.monthYear === "null") {
-            return null
-        }else {
-            return props.monthYear
-        }
-    }
+    const selectedMonthYear = useStore((state) => state.selectedMonthYear)
 
-    const [year, setYear] = useState<string>(isPropsNull()? props.monthYear.split("-")[1] : "2023")
-    const [month, setMonth] = useState<string>(isPropsNull()? props.monthYear.split("-")[0] : "JANUARY")
-    const [monthYear, setMonthYear] = useState<string>("JANUARY-2023")
+    const initialYear = selectedMonthYear && selectedMonthYear !== "null" ? selectedMonthYear.split("-")[1] : "2023";
+    const initialMonth = selectedMonthYear && selectedMonthYear !== "null" ? selectedMonthYear.split("-")[0] : "JANUARY";
 
+    const [year, setYear] = useState<string>(initialYear)
+    const [month, setMonth] = useState<string>(initialMonth)
+
+    const monthYear = `${month}-${year}`
     const getEntries = useStore((state) => state.getEntries)
-    useEffect(() => {
-        setMonthYear(month + "-" + year)
-    }, [year, month])
+    const setSelectedMonthYear = useStore((state) => state.setSelectedMonthYear)
+
+
 
     useEffect(() => {
         getEntries()
-    }, [])
+        setSelectedMonthYear(monthYear)
+    }, [getEntries, setSelectedMonthYear, monthYear])
+
     return (
         <div>
             <HeadingDiv>

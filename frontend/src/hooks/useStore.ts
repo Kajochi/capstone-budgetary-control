@@ -11,6 +11,7 @@ type State = {
     entries: Entry[];
     financeReports: FinanceReport[];
     monthlyBalances: Record<string, MonthlyBalance>;
+    selectedMonthYear: string | null;
     getEntries: () => void;
     getFinanceReports: () => void;
     getMonthlyBalances: () => void;
@@ -23,6 +24,8 @@ type State = {
     setUpdatedCardId: (id: string) => void;
     getIsCardUpdated: () => boolean;
     getUpdatedCard: () => Entry | undefined;
+    setSelectedMonthYear: (monthYear: string | null) => void;
+
 
 }
 
@@ -33,6 +36,7 @@ export const useStore = create<State>((set, get) => ({
     monthlyBalances: {} as Record<string, MonthlyBalance >,
     isCardUpdated: false,
     updatedCardId: "",
+    selectedMonthYear: null,
 
 
 
@@ -124,6 +128,9 @@ export const useStore = create<State>((set, get) => ({
 
     },
 
+    setSelectedMonthYear: (monthYear: string | null) => {
+        set({selectedMonthYear: monthYear})
+    }
 
 
 }));

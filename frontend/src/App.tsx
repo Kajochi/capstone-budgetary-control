@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import {Route, Routes, useSearchParams} from "react-router-dom";
+import {Route, Routes} from "react-router-dom";
 import EntryAddUpdate from "./entryAddUpdate/EntryAddUpdate.tsx";
 import Home from "./home/Home.tsx";
 import LongMenu from "./navBar/LongMenu.tsx";
@@ -9,8 +9,8 @@ import FinanceReport from "./financeReport/FinanceReport.tsx";
 
 export default function App() {
 
-    const [selectedMonthYear] = useSearchParams()
-    const monthYear = selectedMonthYear.get("monthYear")
+
+
     return (
         <>
             <StyledDiv>
@@ -25,7 +25,7 @@ export default function App() {
             <Routes>
                 <Route path={"/"} element={<Home/>}/>
                 <Route path={"/add-entry"} element={<EntryAddUpdate/>}/>
-                <Route path={"/monthlyBalance"} element={<MonthlyBalance monthYear={monthYear}/>}/>
+                <Route path={"/monthlyBalance"} element={<MonthlyBalance/>}/>
                 <Route path={"/financeReport"} element={<FinanceReport/>}/>
             </Routes>
 

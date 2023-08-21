@@ -14,7 +14,8 @@ const options = [
 
 ];
 
-const ITEM_HEIGHT = 48;
+
+
 
 export default function LongMenu() {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -32,10 +33,10 @@ export default function LongMenu() {
                 navigate("/")
                 break;
             case "Add Entry":
-                navigate("/add-entry")
+                navigate(`/add-entry`)
                 break;
             case "Monthly Balance":
-                navigate("/monthlyBalance")
+                navigate(`/monthlyBalance`)
                 break;
             case "Finance Report":
                 navigate("/financeReport")
@@ -63,12 +64,7 @@ export default function LongMenu() {
                 anchorEl={anchorEl}
                 open={open}
                 onClose={handleClickOnItem}
-                PaperProps={{
-                    style: {
-                        maxHeight: ITEM_HEIGHT * 4.5,
-                        width: '20ch',
-                    },
-                }}
+
             >
                 {options.map((option) => (
                     <MenuItem key={option} value={option} onClick={handleClickOnItem}>

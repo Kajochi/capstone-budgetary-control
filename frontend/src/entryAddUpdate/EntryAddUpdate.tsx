@@ -8,50 +8,36 @@ import {
     ToggleButton,
     ToggleButtonGroup
 } from "@mui/material";
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import {Category} from "../model/Category.ts";
 import {Interval} from "../model/Interval.ts";
 import {useStore} from "../hooks/useStore.ts";
-import {useNavigate,  useSearchParams} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {CostType} from "../model/CostType.ts";
-
 
 
 export default function EntryAddUpdate() {
 
+    const getUpdatedCard = useStore((state) => state.getUpdatedCard)
+    const updatedCard = getUpdatedCard()
+    const getIsCardUpdated = useStore((state) => state.getIsCardUpdated)
 
-    const [interval, setInterval] = useState<Interval>('ONCE');
-    const [title, setTitle] = useState<string>("")
-    const [description, setDescription] = useState<string>("")
-    const [amount, setAmount] = useState<string>( "")
-    const [date, setDate] = useState<string>("")
-    const [category, setCategory] = useState<Category>( "INCOME")
-    const [costType, setCostType] = useState<CostType>("FIXED")
+    const [interval, setInterval] = useState<Interval>(updatedCard && getIsCardUpdated() ? updatedCard?.interval : 'ONCE');
+    const [title, setTitle] = useState<string>(updatedCard && getIsCardUpdated() ? updatedCard?.title : "")
+    const [description, setDescription] = useState<string>(updatedCard && getIsCardUpdated() ? updatedCard?.description : "")
+    const [amount, setAmount] = useState<string>(updatedCard && getIsCardUpdated() ? updatedCard?.amount : "")
+    const [date, setDate] = useState<string>(updatedCard && getIsCardUpdated() ? updatedCard?.date : "")
+    const [category, setCategory] = useState<Category>(updatedCard && getIsCardUpdated() ? updatedCard.category : "INCOME")
+    const [costType, setCostType] = useState<CostType>(updatedCard && getIsCardUpdated() ? updatedCard.costType : "FIXED")
 
-    const [selectedMonthYear] = useSearchParams()
-    const monthYear = selectedMonthYear.get("monthYear")
+
 
     const navigate = useNavigate()
-    const getIsCardUpdated = useStore((state) => state.getIsCardUpdated)
     const setIsCardUpdated = useStore((state) => state.setIsCardUpdated)
 
     const createEntry = useStore((state) => state.createEntry)
     const updateEntry = useStore((state) => state.updateEntry)
     const deleteEntry = useStore((state) => state.deleteEntry)
-    const getUpdatedCard = useStore((state) => state.getUpdatedCard)
-
-    useEffect(() => {
-        const updatedCard = getUpdatedCard()
-        if (updatedCard && getIsCardUpdated()) {
-            setInterval(updatedCard.interval)
-            setTitle(updatedCard.title)
-            setDescription(updatedCard.description)
-            setAmount(updatedCard.amount)
-            setDate(updatedCard.date)
-            setCategory(updatedCard.category)
-            setCostType(updatedCard.costType)
-        }
-    }, [])
 
 
     function resetAllUseStates() {
@@ -66,7 +52,7 @@ export default function EntryAddUpdate() {
 
     function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault()
-        getIsCardUpdated()? handlePut() : handlePost()
+        getIsCardUpdated() ? handlePut() : handlePost()
 
     }
 
@@ -81,7 +67,7 @@ export default function EntryAddUpdate() {
             costType: costType
         }
         createEntry(requestBody)
-        navigate(`/monthlyBalance/?monthYear=${monthYear}`)
+        navigate(`/monthlyBalance`)
         setIsCardUpdated(false)
         resetAllUseStates()
 
@@ -99,14 +85,21 @@ export default function EntryAddUpdate() {
             costType: costType
         }
         updateEntry(requestBody, getUpdatedCard()?.id as string)
-        navigate(`/monthlyBalance/?monthYear=${monthYear}`)
+        navigate(`/monthlyBalance`)
         resetAllUseStates()
         setIsCardUpdated(false)
     }
 
     function handleDelete() {
         deleteEntry(getUpdatedCard()?.id as string)
-        navigate(`/monthlyBalance/?monthYear=${monthYear}`)
+        navigate(`/monthlyBalance`)
+        resetAllUseStates()
+        setIsCardUpdated(false)
+    }
+
+
+    function handleCancel() {
+        navigate(`/monthlyBalance`)
         resetAllUseStates()
         setIsCardUpdated(false)
     }
@@ -118,14 +111,6 @@ export default function EntryAddUpdate() {
     function handleChangeCostType(_: React.MouseEvent<HTMLElement>, newCostType: CostType) {
         setCostType(newCostType)
     }
-    function handleCancel() {
-        navigate(`/monthlyBalance/?monthYear=${monthYear}`)
-        resetAllUseStates()
-        setIsCardUpdated(false)
-    }
-
-
-
 
     return (
         <div>
@@ -173,10 +158,10 @@ export default function EntryAddUpdate() {
                     </StyledToggleGroup>
                 </StyledDiv>
                 <StyleDivButtons>
-                    { getIsCardUpdated() ?
+                    {getIsCardUpdated() ?
                         (<>
                             <StyledButton type="submit">Save</StyledButton>
-                         <StyledButton onClick={handleDelete}>Delete</StyledButton>  </> ) :
+                            <StyledButton onClick={handleDelete}>Delete</StyledButton>  </>) :
                         (<StyledButton type="submit">Add</StyledButton>)
                     }
 

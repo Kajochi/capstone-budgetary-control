@@ -1,7 +1,7 @@
 import {Entry} from "../model/Entry.ts";
 import EntryCard from "../entryCard/EntryCard.tsx";
 import {useStore} from "../hooks/useStore.ts";
-import {useEffect, useState} from "react";
+import {useEffect} from "react";
 import styled from "@emotion/styled";
 import MonthlyBalanceAmountsCard from "../monthlyBalanceAmountsCard/MonthlyBalanceAmountsCard.tsx";
 
@@ -11,39 +11,26 @@ type Props = {
 }
 
 export default function EntriesList(props: Props) {
-    const [monthlyEntries, setMonthlyEntries] = useState<Entry []>()
+
 
     const monthlyBalances = useStore((state) => state.monthlyBalances)
     const getMonthlyBalances = useStore((state) => state.getMonthlyBalances)
-    useEffect(() => {
-        getMonthlyBalances()
 
-        checkIfEntriesExist()
+
+    useEffect(() => {
+
+        getMonthlyBalances()
     }, [getMonthlyBalances])
 
-    useEffect(() => {
-        checkIfEntriesExist()
-    }, [props.monthYear])
-
-    function checkIfEntriesExist() {
-        const entries = monthlyBalances?.[props.monthYear]?.monthlyEntries;
-
-        if (entries !== undefined) {
-            setMonthlyEntries(entries);
-        } else {
-            setMonthlyEntries(undefined);
-        }
-
-    }
 
     return (
         <>
 
             {
-                monthlyEntries ? (
+                monthlyBalances?.[props.monthYear]?.monthlyEntries ? (
                     <>
                         <MonthlyBalanceAmountsCard monthlyBalance={monthlyBalances[props.monthYear]}/>
-                        {monthlyEntries?.map((entry: Entry) => {
+                        {monthlyBalances?.[props.monthYear]?.monthlyEntries.map((entry: Entry) => {
                             return <EntryCard key={entry.id} entry={entry} monthYear={props.monthYear}/>
                         })}
                     </>
