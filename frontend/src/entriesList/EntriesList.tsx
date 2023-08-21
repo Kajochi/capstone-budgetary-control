@@ -16,10 +16,10 @@ export default function EntriesList(props: Props) {
     const monthlyBalances = useStore((state) => state.monthlyBalances)
     const getMonthlyBalances = useStore((state) => state.getMonthlyBalances)
 
+
     useEffect(() => {
 
         getMonthlyBalances()
-
     }, [getMonthlyBalances])
 
 

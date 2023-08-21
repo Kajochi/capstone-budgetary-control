@@ -20,7 +20,7 @@ export default function App() {
                 </HeaderChildDiv1>
                 <StyledH1 >Budgetary Control</StyledH1>
                 <HeaderChildDiv3 >
-                    <LongMenu/>
+                    <LongMenu monthYear={monthYear}/>
                 </HeaderChildDiv3>
             </StyledDiv>
             <Routes>

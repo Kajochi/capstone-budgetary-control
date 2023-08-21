@@ -14,9 +14,13 @@ const options = [
 
 ];
 
+type Props = {
+    monthYear: string | null;
+}
+
 const ITEM_HEIGHT = 48;
 
-export default function LongMenu() {
+export default function LongMenu(props: Props) {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
 
@@ -32,10 +36,10 @@ export default function LongMenu() {
                 navigate("/")
                 break;
             case "Add Entry":
-                navigate("/add-entry")
+                navigate(`/add-entry/?monthYear=${props.monthYear}`)
                 break;
             case "Monthly Balance":
-                navigate("/monthlyBalance")
+                navigate(`/monthlyBalance/?monthYear=${props.monthYear}`)
                 break;
             case "Finance Report":
                 navigate("/financeReport")

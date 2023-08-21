@@ -13,15 +13,19 @@ type Props = {
 
 export default function MonthlyBalance(props: Props) {
 
-    const initialYear = props.monthYear && props.monthYear !== "null" ? props.monthYear.split("-")[1] : "2023";
-    const initialMonth = props.monthYear && props.monthYear !== "null" ? props.monthYear.split("-")[0] : "JANUARY";
+    const selectedMonthYear = useStore((state) => state.selectedMonthYear)
+
+    const initialYear = selectedMonthYear && selectedMonthYear !== "null" ? selectedMonthYear.split("-")[1] : "2023";
+    const initialMonth = selectedMonthYear && selectedMonthYear !== "null" ? selectedMonthYear.split("-")[0] : "JANUARY";
 
     const [year, setYear] = useState<string>(initialYear)
     const [month, setMonth] = useState<string>(initialMonth)
 
     const monthYear = `${month}-${year}`
     const getEntries = useStore((state) => state.getEntries)
+    const setSelectedMonthYear = useStore((state) => state.setSelectedMonthYear)
 
+    setSelectedMonthYear(monthYear)
 
     useEffect(() => {
         getEntries()
