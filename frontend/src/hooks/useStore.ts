@@ -52,7 +52,6 @@ export const useStore = create<State>((set, get) => ({
             .then((response) => {
                 set({financeReports: response.data});
             }).catch(error)
-
     },
 
     getMonthlyBalances: () => {
@@ -63,46 +62,29 @@ export const useStore = create<State>((set, get) => ({
     },
 
     createEntry: (requestBody: EntryWithNoId) => {
-        const getEntries = get().getEntries
-        const getFinanceReports = get().getFinanceReports
-        const getMonthlyBalances = get().getMonthlyBalances
         axios.post("/api/entries", requestBody)
             .catch(error)
             .then(() => {
-                getEntries();
-                getFinanceReports()
-                getMonthlyBalances()
             })
 
     },
 
     updateEntry: (requestBody: EntryWithNoId, id: string) => {
-        const getEntries = get().getEntries
-        const getFinanceReports = get().getFinanceReports
-        const getMonthlyBalances = get().getMonthlyBalances
         axios.put(
             "/api/entries/" + id,
             requestBody
         ).catch(error)
             .finally(()=> {
-                getEntries();
-                getFinanceReports();
-                getMonthlyBalances();
                 set({isCardUpdated: false})
             })
 
     },
 
     deleteEntry: (id: string) => {
-        const getEntries = get().getEntries
-        const getFinanceReports = get().getFinanceReports
-        const getMonthlyBalances = get().getMonthlyBalances
+
         axios.delete("/api/entries/" + id)
             .catch(error)
             .then(() => {
-                getEntries();
-                getFinanceReports();
-                getMonthlyBalances();
                 set({isCardUpdated: false})
             })
     },
@@ -120,12 +102,12 @@ export const useStore = create<State>((set, get) => ({
     },
 
     getUpdatedCard: () => {
-        const getEntries = get().getEntries
-        getEntries()
         const id = get().updatedCardId
-        const entries = get().entries
-        return entries.find(entry => entry.id === id)
-
+      //  const entries = get().entries
+        const monthYear = get().selectedMonthYear
+        const monthlyBalances = get().monthlyBalances
+        return monthYear && monthlyBalances?.[monthYear].monthlyEntries ? monthlyBalances[monthYear].monthlyEntries.find(entry => entry.id === id) : undefined
+       // return entries.find(entry => entry.id === id)
     },
 
     setSelectedMonthYear: (monthYear: string | null) => {

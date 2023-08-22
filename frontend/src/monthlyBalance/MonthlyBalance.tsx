@@ -18,15 +18,14 @@ export default function MonthlyBalance() {
     const [month, setMonth] = useState<string>(initialMonth)
 
     const monthYear = `${month}-${year}`
-    const getEntries = useStore((state) => state.getEntries)
     const setSelectedMonthYear = useStore((state) => state.setSelectedMonthYear)
 
 
 
     useEffect(() => {
-        getEntries()
+
         setSelectedMonthYear(monthYear)
-    }, [getEntries, setSelectedMonthYear, monthYear])
+    }, [ setSelectedMonthYear, monthYear])
 
     return (
         <div>
