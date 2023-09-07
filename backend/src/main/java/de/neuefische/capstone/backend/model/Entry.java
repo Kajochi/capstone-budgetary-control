@@ -1,13 +1,8 @@
 package de.neuefische.capstone.backend.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -30,7 +25,7 @@ public class Entry {
     private BigDecimal amount;
     @Column(name = "category")
     private  Category category;
-    @Column(name = "interval")
+    @Column(name = "entry_interval")
     private  Interval interval;
     @Column(name = "costType")
     private  CostType costType;
