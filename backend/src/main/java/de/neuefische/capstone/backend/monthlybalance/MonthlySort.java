@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.Period;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -24,7 +23,7 @@ public class MonthlySort {
 
     private List<LocalDate> generateEarliestAndLatestMonthForMonthlyBalance() {
         LocalDate currentDate = LocalDate.now();
-        LocalDate endDate = currentDate.plusMonths(13);
+        LocalDate endDate = currentDate.plusMonths(12);
 
         Entry earliestEntry = entriesRepo.findFirstByOrderByDateAsc();
         LocalDate earliestTransactionDate = earliestEntry.getDate();
@@ -84,8 +83,7 @@ public class MonthlySort {
                         && entry.getDate().getYear() == targetDate.getYear())
                 .filter(entry -> {
                     int multiplier = Interval.getMultiplier(entry.getInterval());
-                    int monthsSinceStart = Period.between(entry.getDate(), targetDate.plusMonths(1)).getMonths();
-                    return monthsSinceStart % multiplier == 0;
+                    return calculateApplicableMonths(multiplier, entry.getDate().getMonthValue(), targetDate.getMonthValue());
                 })
                 .toList();
 
@@ -95,6 +93,23 @@ public class MonthlySort {
         sortedEntries.addAll(onceEntries);
 
         return sortedEntries;
+
+    }
+
+    private boolean calculateApplicableMonths(int interval, int startMonth, int targetMonth) {
+        List <Integer> applicableMonths = new ArrayList<>();
+        applicableMonths.add(startMonth);
+        for(int i = 0; i <= interval; i++){
+            startMonth = startMonth + interval;
+            if (startMonth > 12){
+                applicableMonths.add(startMonth - 12);
+
+            }else {
+                applicableMonths.add(startMonth);
+            }
+        }
+
+       return applicableMonths.contains(targetMonth);
 
     }
 
