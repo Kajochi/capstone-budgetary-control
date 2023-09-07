@@ -26,12 +26,12 @@ public class EntriesController {
     }
 
     @PutMapping("{id}")
-    Entry updateEntry(@RequestBody EntryWithNoId entryWithNoId, @PathVariable String id) {
+    Entry updateEntry(@RequestBody EntryWithNoId entryWithNoId, @PathVariable Long id) {
         return entriesService.updateEntry(entryWithNoId, id);
     }
 
     @DeleteMapping("{id}")
-    void deleteEntry(@PathVariable String id) {
+    void deleteEntry(@PathVariable Long id) {
         entriesService.deleteEntry(id);
     }
 }

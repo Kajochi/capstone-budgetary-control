@@ -2,6 +2,7 @@ package de.neuefische.capstone.backend.entries;
 
 import de.neuefische.capstone.backend.model.Entry;
 import de.neuefische.capstone.backend.model.EntryWithNoId;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,10 +11,10 @@ public class EntriesService {
 
     private final EntriesRepo entriesRepo;
 
-    private final IdService idService;
 
-    public EntriesService(EntriesRepo entriesRepo, IdService idService) {
-        this.idService = idService;
+
+    public EntriesService(EntriesRepo entriesRepo) {
+
         this.entriesRepo = entriesRepo;
     }
 
@@ -22,34 +23,33 @@ public class EntriesService {
     }
 
     public Entry addEntry(EntryWithNoId entryWithNoId) {
-        return entriesRepo.insert(new Entry(
-                idService.createRandomId(),
-                entryWithNoId.getTitle(),
-                entryWithNoId.getDescription(),
-                entryWithNoId.getDate(),
-                entryWithNoId.getAmount(),
-                entryWithNoId.getCategory(),
-                entryWithNoId.getInterval(),
-                entryWithNoId.getCostType()
-        ));
+        Entry entry = new Entry();
+        entry.setTitle(entryWithNoId.getTitle());
+        entry.setDescription(entryWithNoId.getDescription());
+        entry.setDate(entryWithNoId.getDate());
+        entry.setAmount(entryWithNoId.getAmount());
+        entry.setCategory(entryWithNoId.getCategory());
+        entry.setInterval(entryWithNoId.getInterval());
+        entry.setCostType(entryWithNoId.getCostType());
+        return entriesRepo.save(entry);
     }
 
-    public Entry updateEntry(EntryWithNoId entryWithNoId, String id) {
-        Entry updatedEntry = new  Entry(
-                id,
-                entryWithNoId.getTitle(),
-                entryWithNoId.getDescription(),
-                entryWithNoId.getDate(),
-                entryWithNoId.getAmount(),
-                entryWithNoId.getCategory(),
-                entryWithNoId.getInterval(),
-                entryWithNoId.getCostType()
-        );
+    public Entry updateEntry(EntryWithNoId entryWithNoId, Long id ) {
+        Entry existingEntry = entriesRepo.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Entry with id " + id + " not found"));
 
-        return entriesRepo.save(updatedEntry);
+        existingEntry.setTitle(entryWithNoId.getTitle());
+        existingEntry.setDescription(entryWithNoId.getDescription());
+        existingEntry.setDate(entryWithNoId.getDate());
+        existingEntry.setAmount(entryWithNoId.getAmount());
+        existingEntry.setCategory(entryWithNoId.getCategory());
+        existingEntry.setInterval(entryWithNoId.getInterval());
+        existingEntry.setCostType(entryWithNoId.getCostType());
+
+        return entriesRepo.save(existingEntry);
     }
 
-    public void deleteEntry(String id) {
+    public void deleteEntry(long id) {
         if (!entriesRepo.existsById(id)) throw new IllegalArgumentException();
         entriesRepo.deleteById(id);
     }
