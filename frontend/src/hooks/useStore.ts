@@ -102,12 +102,11 @@ export const useStore = create<State>((set, get) => ({
     },
 
     getUpdatedCard: () => {
+        const getEntries = get().getEntries
+        getEntries()
         const id = get().updatedCardId
-      //  const entries = get().entries
-        const monthYear = get().selectedMonthYear
-        const monthlyBalances = get().monthlyBalances
-        return monthYear && monthlyBalances?.[monthYear].monthlyEntries ? monthlyBalances[monthYear].monthlyEntries.find(entry => entry.id === id) : undefined
-       // return entries.find(entry => entry.id === id)
+        const entries = get().entries
+        return entries.find(entry => entry.id === id)
     },
 
     setSelectedMonthYear: (monthYear: string | null) => {
