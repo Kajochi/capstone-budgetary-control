@@ -7,10 +7,7 @@ import org.junit.jupiter.api.Test;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -26,10 +23,15 @@ class MonthlySortTest {
     @Test
     void whenEarliestMonthIsAugust23AndLatestAugust24generateMonthlyBalanceList() {
         //Given
+        LocalDate currentDate = LocalDate.now();
+        int currentMonth = currentDate.getMonthValue();
+        int currentYear = currentDate.getYear();
+        int monthInOneYear = currentMonth + 12;
+
         Entry earliestEntry = new Entry("1",
                 "testTitle",
                 "testDescription",
-                LocalDate.of(2023, 8, 22),
+                LocalDate.of(currentYear, currentMonth, 22),
                 new BigDecimal(1000),
                 Category.INCOME,
                 Interval.MONTHLY,
@@ -39,7 +41,7 @@ class MonthlySortTest {
                 new Entry("1",
                         "testTitle",
                         "testDescription",
-                        LocalDate.of(2023, 8, 22),
+                        LocalDate.of(currentYear, currentMonth, 22),
                         new BigDecimal(1000),
                         Category.INCOME,
                         Interval.MONTHLY,
@@ -51,15 +53,15 @@ class MonthlySortTest {
         Map<String, MonthlyBalance> actual = monthlySort.generateMonthlyBalanceList();
         Map<String, MonthlyBalance> expected = new HashMap<>();
 
-        for (int month = 8; month < 21; month++) {
+        for (int month = currentMonth; month < monthInOneYear; month++) {
             int magicMonth;
             int year;
             if (month <= 12) {
                 magicMonth = month;
-                year = 2023;
+                year = currentYear;
             } else {
                 magicMonth = month - 12;
-                year = 2024;
+                year = currentYear + 1;
             }
             String monthLabel = LocalDate.of(2023, magicMonth, 1).getMonth().toString().toUpperCase();
             monthLabel = monthLabel + "-" + year;
