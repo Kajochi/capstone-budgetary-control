@@ -17,7 +17,10 @@ import static org.mockito.Mockito.*;
 class MonthlyBalanceServiceTest {
     MonthlySort monthlySort = mock(MonthlySort.class);
     MonthlyBalanceService monthlyBalanceService = new MonthlyBalanceService(monthlySort);
-
+    LocalDate currentDate = LocalDate.now();
+    int currentMonth = currentDate.getMonthValue();
+    int currentYear = currentDate.getYear();
+    int monthInOneYear = currentMonth + 12;
     @Test
     void getMonthlyBalanceList() {
         //GIVEN
@@ -31,17 +34,17 @@ class MonthlyBalanceServiceTest {
                         Interval.MONTHLY,
                         CostType.FIXED));
         Map<String, MonthlyBalance> expected = new HashMap<>();
-        for (int month = 8; month < 21; month++) {
+        for (int month = currentMonth; month < monthInOneYear; month++) {
             int magicMonth ;
             int year ;
             if (month <= 12) {
                 magicMonth = month;
-                year = 2023;
+                year = currentYear;
             }else {
                 magicMonth = month - 12;
-                year = 2024;
+                year = currentYear + 1;
             }
-            String monthLabel = LocalDate.of(2023, magicMonth, 1).getMonth().toString().toUpperCase();
+            String monthLabel = LocalDate.of(currentYear, magicMonth, 1).getMonth().toString().toUpperCase();
             monthLabel = monthLabel+"-"+year;
             MonthlyBalance monthlyBalance = new MonthlyBalance(monthLabel,
                     new BigDecimal("1000"),

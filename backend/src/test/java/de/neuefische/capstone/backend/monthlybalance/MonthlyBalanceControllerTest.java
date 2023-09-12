@@ -54,7 +54,7 @@ class MonthlyBalanceControllerTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
 
         //Then
-        assertEquals(13, monthlyBalanceService.getMonthlyBalanceList().size());
+        assertEquals(12, monthlyBalanceService.getMonthlyBalanceList().size());
 
     }
 
