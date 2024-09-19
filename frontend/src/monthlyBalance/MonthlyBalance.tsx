@@ -24,7 +24,7 @@ export default function MonthlyBalance() {
 
     useEffect(() => {
 
-        setSelectedMonthYear(monthYear)
+                                                                                    setSelectedMonthYear(monthYear)
     }, [ setSelectedMonthYear, monthYear])
 
     return (

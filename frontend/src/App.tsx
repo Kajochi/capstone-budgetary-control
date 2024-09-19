@@ -17,7 +17,7 @@ export default function App() {
                 <HeaderChildDiv1 >
                     <SavingsIcon fontSize="large"/>
                 </HeaderChildDiv1>
-                <StyledH1 >Budgetary Control</StyledH1>
+                <StyledH1>Budgetary Control</StyledH1>
                 <HeaderChildDiv3 >
                     <LongMenu/>
                 </HeaderChildDiv3>
